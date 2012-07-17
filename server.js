@@ -11,7 +11,7 @@ var template = require('./template.js');
 var fs = require('fs');
 var url = require('url');
 
-var HTTP_PORT = 8000;
+var HTTP_PORT = 80;
 var TCP_PORT = 8181;
 
 // HTTP Server
