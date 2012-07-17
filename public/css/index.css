@@ -1,0 +1,134 @@
+/* @override http://localhost:8082/h3/public/css/index.css */
+
+/* Global ----------------------------------------------- */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    color: #333;
+    font-family: "Trebuchet MS";
+    background-color: hsl(0,0%,96%);
+}
+
+#center-column {
+    margin: auto;
+    width: 460px;
+    color: #111;
+}
+
+
+
+
+/* Header ----------------------------------------------- */
+
+#main-header {
+    position: relative;
+    padding: 10px;
+    z-index: 2;
+    color: #EEE;
+    text-shadow: 0 2px 2px hsla(0,0%,0%,.2);
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid hsl(210,100%,35%);
+    border-top: none;
+    background: -webkit-linear-gradient( hsl(210,100%,55%), hsl(210,100%,45%) );
+    box-shadow: 0 2px 3px hsla(0,0%,0%,.2);
+}
+
+#main-header h1 {
+    margin: 0;
+    font-size: 1.6em;
+}
+#main-header .logo {
+    font-size: 2em;
+}
+
+
+
+/* Menu ----------------------------------------------- */
+
+#main-menu {
+    margin: 0 10px 0 10px;
+    padding: 0;
+    border: 1px solid hsl(0,0%,75%);
+    border-bottom: none;
+    background-color: hsl(0,0%,90%);
+}
+
+#main-menu li {
+    display: block;
+    border-top: 1px solid hsla(0,0%,100%,.6);
+    border-bottom: 1px solid hsla(0,0%,0%,.1);
+}
+
+#main-menu a, #main-menu a:visited {
+    display: block;
+    padding-left: 80px;
+    vertical-align: middle;
+    line-height: 70px;
+    font-size: 1.6em;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    text-shadow: 0 2px hsla(0,0%,100%,.4);
+    -webkit-transition: background-color .2s;
+}
+
+#main-menu a:hover {
+    -webkit-transition: none;
+    background-color: hsl(0,0%,95%);
+}
+
+#main-menu a:active {
+    -webkit-transition: none;
+    background-color: hsl(0,0%,85%);
+}
+
+
+#main-menu a img {
+    margin-right: 20px;
+    vertical-align: middle;
+}
+
+
+
+
+/* Footer ----------------------------------------------- */
+
+#footer {
+    padding: 20px;
+    margin: 0 10px 0 10px;
+    text-align: center;
+    font-size: 0.8em;
+    color: hsl(0,0%,50%);
+    border-radius: 0 0 10px 10px;
+    border: 1px solid hsl(0,0%,75%);
+    border-top: none;
+    background-color: hsl(0,0%,85%);
+}
+
+
+
+/* Unused ----------------------------------------------- */
+
+/*.download {
+    display: block;
+    width: 100px;
+    text-align: center;
+    border-radius: 5px;
+}
+.download .version {
+    font-size: 0.8em;
+}*/
+
+/*#mobile {
+    text-align: center;
+    margin-top: 20px;
+}
+#mobile h2 {
+    font-size: 1.1em;
+}*/
