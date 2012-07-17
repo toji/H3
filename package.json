@@ -1,15 +1,22 @@
 {
   "name": "h3",
   "subdomain": "h3",
+  "author": {
+    "name": "Brandon Jones",
+    "email": "tojiro@gmail.com"
+  },
   "scripts": {
     "start": "server.js"
   },
-  "version": "0.0.1-2",
+  "version": "0.0.1-17",
+  "dependencies": {
+    "socket.io": "v0.8.x",
+    "express": "v2.5.x"
+  },
+  "analyze": false,
+  "devDependencies": {},
+  "optionalDependencies": {},
   "engines": {
     "node": "0.6.x"
-  },
-  "dependencies": {
-    "express": "*",
-    "socket.io": "*"
   }
 }
