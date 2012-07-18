@@ -10,10 +10,11 @@ var TileType = function(image_path, multiplier, frequency, neutral) {
 }
 
 // Tracks gameboard state
-var Board = function(left, top, width, height) {
+var Board = function(left, top, width, height, theme) {
     this.columns = 8;
     this.rows = 9;
     this.board_size = this.rows * this.columns;
+    this.theme = theme;
     
     this.tile_size = null;
     
@@ -24,7 +25,7 @@ var Board = function(left, top, width, height) {
             new TileType('green.png'),
             new TileType('blue.png'),
             new TileType('teal.png'),
-            new TileType('mult2x.png', 2.0, 0.05, true),
+            new TileType('mult2x.png', 2.0, 0.05, true)
         ];
     
     // If we are provided a width and height, we know that this is a client-side board
@@ -90,7 +91,7 @@ Board.prototype.randomize = function() {
 Board.prototype.initialize_tile_types = function() {
     for(var i in this.tile_types) {
         this.tile_types[i].image = new Image();
-        this.tile_types[i].image.src = '/img/' + global.theme + '/' + this.tile_types[i].image_path;
+        this.tile_types[i].image.src = '/img/' + this.theme + '/' + this.tile_types[i].image_path;
     }
 }
 

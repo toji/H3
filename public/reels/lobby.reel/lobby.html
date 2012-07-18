@@ -33,10 +33,13 @@ freely, subject to the following restrictions:
                     }
                 },
 
-                "playerName": {
+                "localPlayerName": {
                     "prototype": "montage/ui/input-text.reel",
                     "properties": {
-                        "element": {"#": "playerName"}
+                        "element": {"#": "localPlayerName"}
+                    },
+                    "bindings": {
+                        "contents": {"<->": "@owner.gameState.localPlayer.name"}
                     }
                 },
 
@@ -47,12 +50,42 @@ freely, subject to the following restrictions:
                     }
                 },
 
+                "playerList": {
+                    "prototype": "montage/ui/repetition.reel",
+                    "properties": {
+                        "element": {"#": "playerList"}
+                    },
+                    "bindings": {
+                        "objects": {"<-": "@owner.gameState.players"}
+                    }
+                },
+
+                "playerName": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "playerName"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@playerList.objectAtCurrentIteration.name"}
+                    }
+                },
+
+                "playerScore": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "playerScore"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@playerList.objectAtCurrentIteration.score"}
+                    }
+                },
+
                 "chatInput": {
                     "prototype": "montage/ui/input-text.reel",
                     "properties": {
                         "element": {"#": "chatInput"}
                     }
-                },
+                }
             }
         </script>
     </head>
@@ -60,7 +93,7 @@ freely, subject to the following restrictions:
         <section data-montage-id="lobby" class="lobby">
             <div id="nameField">
                 <span>Name:</span>
-                <input data-montage-id="playerName" type="text"></input>
+                <input data-montage-id="localPlayerName" type="text"></input>
                 <button data-montage-id="readyButton">Ready?</button>
             </div>
             <div id="colorField">
@@ -75,8 +108,15 @@ freely, subject to the following restrictions:
                 <div class="colorOption checked" style="background-color: #FFF"></div>
             </div>
             
-            <div id="playerList">
+            <div>
                 <h3>Players</h3>
+                <div data-montage-id="playerList">
+                    <div class="playerScore">
+                        <div data-montage-id="playerColor" class="color"></div>
+                        <span data-montage-id="playerName" class="name"></span>
+                        <span data-montage-id="playerScore" class="score"></span>
+                    </div>
+                </div>
             </div>
             
             <!--div>

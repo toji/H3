@@ -21,7 +21,8 @@
  *    distribution.
  </copyright> */
 
-var Montage = require("montage/core/core").Montage;
+var Montage = require("montage/core/core").Montage,
+    Globals = require("reels/globals").Globals;
 
 var RenderBase = exports.RenderBase = Montage.create(Montage, {
     frameStartCallbacks: {
@@ -104,16 +105,16 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 that.drawTileEx(true, tile, type, 1, 1);
                 that.clear_tile(tile);
             
-                var life = totalLife + parseInt(i) * 5;
+                var life = totalLife + parseInt(i, 10) * 5;
                 
                 that.frameStartCallbacks.push(function(frame_time) {
-                    
+                    var mod;
                     if(out) {
-                        var mod = jQuery.easing.easeOutBack(null, totalLife - life, 0, 1, totalLife);
+                        mod = jQuery.easing.easeOutBack(null, totalLife - life, 0, 1, totalLife);
                         var linear_mod = (totalLife - life) / totalLife;
                         that.drawTileEx(true, tile, type, 1 + (mod*0.5), 1-linear_mod);
                     } else {
-                        var mod = jQuery.easing.easeOutCubic(null, totalLife - life, 0, 1, totalLife);
+                        mod = jQuery.easing.easeOutCubic(null, totalLife - life, 0, 1, totalLife);
                         that.drawTileEx(true, tile, type, 1-mod, 1-mod);
                     }
                     
@@ -127,7 +128,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                     for(var i in adjacent)
                         animate(adjacent[i]);
                 }, 50);
-            };
+            }
             
             animate(lastTile);
         }
@@ -204,14 +205,16 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             this.tileContext = tileCanvas.getContext('2d');
             this.effectContext = effectCanvas.getContext('2d');
             this.emptyTile = new Image();
-            this.emptyTile.src = '/img/' + global.theme + '/empty.png';
+            this.emptyTile.src = '/img/' + Globals.theme + '/empty.png';
+
+            return this;
         }
     },
 
     clear: {
         value: function() {
             // clear the entire board
-            this.effectContext.clearRect(0, 0, global.board.width, global.board.height);
+            this.effectContext.clearRect(0, 0, Globals.board.width, Globals.board.height);
         }
     },
 
@@ -223,15 +226,15 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             else
                 ctx = this.tileContext;
             
-            if(type < 0 || type >= this.board.tileTypes.length)
+            if(type < 0 || type >= this.board.tile_types.length)
                 return;
                 
             ctx.save();
             
             try {
-                var img = this.board.tileTypes[type].image;
-                var pt = this.board.tileToPixel(tile);
-                var ts = this.board.tileSize;
+                var img = this.board.tile_types[type].image;
+                var pt = this.board.tile_to_pixel(tile);
+                var ts = this.board.tile_size;
 
                 var sizeX = (ts.b - ts.padding);
                 var sizeY = (ts.a - ts.padding);
@@ -341,7 +344,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             ctx.closePath();
             
             ctx.strokeStyle = player.css_color();
-            ctx.lineWidth = global.highlightWidth * (1/scale);
+            ctx.lineWidth = Globals.highlightWidth * (1/scale);
             ctx.stroke();
             
             ctx.restore();
@@ -368,12 +371,12 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             for(var i = 1; i < player.trail.length; ++i) {
                 pt = player.trail[i];
                 
-                var mod = pt.life / global.trailLife;
+                var mod = pt.life / Globals.trailLife;
                 
                 ctx.lineTo(pt.x, pt.y);
                 
                 //ctx.globalAlpha = pt.life / global.trailLife;
-                ctx.lineWidth = global.trailWidth * mod;
+                ctx.lineWidth = Globals.trailWidth * mod;
                 ctx.stroke();
                 
                 ctx.beginPath();
@@ -384,7 +387,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
                 ctx.lineTo(lastPt.x, lastPt.y);
                 
                 ctx.globalAlpha = 1.0;
-                ctx.lineWidth = global.trailWidth;
+                ctx.lineWidth = Globals.trailWidth;
                 ctx.stroke();
             }
             
@@ -412,9 +415,9 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             var ctx = this.effectContext;
             ctx.font = 'bold 28px sans-serif';
             ctx.fillStyle = '#FFF';
-            ctx.fillText(time_left, (global.board.width*0.5)+2, 38);
+            ctx.fillText(time_left, (Globals.board.width*0.5)+2, 38);
             
-            ctx.drawImage(this.clockImg, (global.board.width*0.5)-34, 10, 32, 32);
+            ctx.drawImage(this.clockImg, (Globals.board.width*0.5)-34, 10, 32, 32);
         }
     }
 });

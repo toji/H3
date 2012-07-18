@@ -21,7 +21,8 @@
  *    distribution.
  </copyright> */
 
-var Montage = require("montage/core/core").Montage;
+var Montage = require("montage/core/core").Montage,
+    Globals = require("reels/globals").Globals;
 
 exports.Player = Montage.create(Montage, {
     id: {
@@ -74,20 +75,17 @@ exports.Player = Montage.create(Montage, {
     },
 
     sync: {
-        value: function(data, ui) {
+        value: function(data) {
             if(data.name) {
                 this.name = data.name;
-                ui.update_name(this);
             }
                 
             if(data.hasOwnProperty('score')) {
                 this.score = data.score;
-                ui.update_score(this, data.change);
             }
             
             if(data.color) {
                 this.color = data.color;
-                ui.update_color(this);
             }
             
             if(data.trail) {
@@ -96,7 +94,6 @@ exports.Player = Montage.create(Montage, {
             
             if(data.hasOwnProperty('ready')) {
                 this.ready = data.ready;
-                ui.update_ready(this);
             }
                 
             if(data.path) {
@@ -108,7 +105,7 @@ exports.Player = Montage.create(Montage, {
     updateTrail: {
         value: function(pt) {
             if(this.trail.length === 0) {
-                this.trail.push({ x: pt.x, y: pt.y, life: global.trail_life });
+                this.trail.push({ x: pt.x, y: pt.y, life: Globals.trail_life });
                 return true;
             }
             
@@ -118,10 +115,10 @@ exports.Player = Montage.create(Montage, {
             if(dist(pt, pt2) < 10)
                 return false;
                 
-            this.trail.push({ x: pt.x, y: pt.y, life: global.trail_life });
+            this.trail.push({ x: pt.x, y: pt.y, life: Globals.trail_life });
             
             // Make sure the trail never grows too long
-            while(this.trail.length > global.max_trail_length) {
+            while(this.trail.length > Globals.max_trail_length) {
                 this.trail.shift();
             }
             

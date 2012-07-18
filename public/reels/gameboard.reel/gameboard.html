@@ -33,12 +33,26 @@ freely, subject to the following restrictions:
                         "tileLayer": {"#": "tileLayer" },
                         "effectLayer": {"#": "effectLayer" }
                     }
+                },
+
+                "timeLeft": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "timeLeft"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@owner.gameState.timeLeft"}
+                    }
                 }
             }
         </script>
     </head>
     <body>
         <section data-montage-id="gameboard" class="gameboard">
+            <div class="timer">
+                <img src="img/clock.png">
+                <span data-montage-id="timeLeft" class="timeLeft"></span>
+            </div>
             <canvas data-montage-id="tileLayer"></canvas>
             <canvas data-montage-id="effectLayer"></canvas>
         </section>

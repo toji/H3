@@ -22,12 +22,63 @@
  </copyright> */
 
 var Montage = require("montage/core/core").Montage,
-    Component = require("montage/ui/component").Component;
+    Component = require("montage/ui/component").Component,
+    GameState = require("reels/game-state").GameState,
+    CanvasRenderer = require("reels/render").CanvasRenderer;
 
 exports.Gameboard = Montage.create(Component, {
-    draw: {
+    tileLayer: {
+        value: null
+    },
+
+    effectLayer: {
+        value: null
+    },
+
+    gameState: {
+        value: null
+    },
+
+    renderer: {
+        value: null
+    },
+
+    templateDidLoad: {
+        value: function() {
+            this.renderer = CanvasRenderer.create().init(this.tileLayer, this.effectLayer);
+            this.gameState = GameState.create().init(this.renderer);
+
+            this.gameState.addEventListener("startRound", this, false);
+            this.gameState.addEventListener("endRound", this, false);
+        }
+    },
+
+    handleStartRound: {
+        value: function() {
+            this._lastFrameTime = Date.now();
+            this.needsDraw = true;
+        }
+    },
+
+    handleEndRound: {
         value: function() {
             
+        }
+    },
+
+    _lastFrameTime: {
+        value: null
+    },
+
+    draw: {
+        value: function() {
+            if(!this.gameState.roundStarted) { return; }
+
+            var newFrameTime = Date.now();
+            this.gameState.onFrame(newFrameTime - this._lastFrameTime);
+            this._lastFrameTime = newFrameTime;
+
+            this.needsDraw = true; // Schedule the next draw
         }
     }
 });

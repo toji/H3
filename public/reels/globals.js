@@ -21,17 +21,12 @@
  *    distribution.
  </copyright> */
 
-var Montage = require("montage/core/core").Montage,
-    Component = require("montage/ui/component").Component;
-
-exports.Lobby = Montage.create(Component, {
-    gameState: {
-        value: null
-    },
-    
-    draw: {
-        value: function() {
-            
-        }
-    }
-});
+exports.Globals = {
+    board: { width: 480, height: 640, background: '#BBB' },
+    highlightWidth: 4,
+    trailWidth: 16,
+    maxTrailLength: 20,
+    trailLife: 250,
+    tileSize: 16,
+    theme: 'gloss'
+};

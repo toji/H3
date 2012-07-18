@@ -31,14 +31,37 @@ freely, subject to the following restrictions:
                     "properties": {
                         "element": {"#": "main" }
                     }
+                },
+
+                "lobby": {
+                    "prototype": "reels/lobby.reel",
+                    "properties": {
+                        "element": {"#": "lobby" }
+                    },
+                    "bindings": {
+                        "gameState": {"<-": "@gameboard.gameState"}
+                    }
+                },
+
+                "gameboard": {
+                    "prototype": "reels/gameboard.reel",
+                    "properties": {
+                        "element": {"#": "gameboard" }
+                    }
                 }
             }
         </script>
     </head>
     <body>
         <section data-montage-id="main">
+
+            <section data-montage-id="lobby">
+
+            </section>
             
-            <h1>HI MOM!</h1>
+            <section data-montage-id="gameboard">
+
+            </section>
             
         </section>
     </body>

@@ -22,9 +22,11 @@
  </copyright> */
 
 var Montage = require("montage/core/core").Montage,
-    Player = require("player").Player;
+    Player = require("reels/player").Player,
+    Board = require("js/board").Board,
+    Globals = require("reels/globals").Globals;
 
-exports.Game = Montage.create(Montage, {
+exports.GameState = Montage.create(Montage, {
     // Server state
     id: {
         value: -1
@@ -48,17 +50,20 @@ exports.Game = Montage.create(Montage, {
         value: -1
     },
 
+    localPlayer: {
+        value: -1
+    },
+
     lastMousePt: {
         value: null
     },
 
+    timeLeft: {
+        value: 0
+    },
+
     roundStarted: {
         value: false
-    },
-    
-    // UI Handler
-    ui: {
-        value: null
     },
 
     // Renderer
@@ -76,11 +81,8 @@ exports.Game = Montage.create(Montage, {
     },
 
     init: {
-        value: function(uiHandler, renderer) {
-            this.board = new Board(10, 48, global.board.width-20, global.board.height-58);
-
-            this.ui = uiHandler;
-            this.ui.bindGame(this);
+        value: function(renderer) {
+            this.board = new Board(10, 48, Globals.board.width-20, Globals.board.height-58, Globals.theme);
 
             this.render = renderer;
             this.render.bindGame(this);
@@ -90,12 +92,18 @@ exports.Game = Montage.create(Montage, {
             
             this.socket = io.connect();
             this.socket.on('connect', function() {
-                game.ui.onConnected();
+                // Try to get locally stored name?
+                var playerName = null; //jQuery.cookie('player_name');
+                if(playerName !== null) {
+                    this.sendMessage('sync_player', {
+                        name: playerName
+                    } );
+                }
             });
             this.socket.on('message', function(packet){
                 var data = JSON.parse(packet);
-                console.log(data.type + ', ' + data.player + ': ');
-                console.log(data.data);
+                /*console.log(data.type + ', ' + data.player + ': ');
+                console.log(data.data);*/
                 game.onMessage(data.type, data.data, data.player);
             });
 
@@ -119,7 +127,7 @@ exports.Game = Montage.create(Montage, {
                         player = new Player(playerId, this);
                         this.addPlayer(player);
                     }
-                    player.sync(data, this.ui);
+                    player.sync(data);
                     break;
                     
                 case 'remove_player':
@@ -166,7 +174,7 @@ exports.Game = Montage.create(Montage, {
                     break;
                 
                 case 'chat':
-                    this.ui.onChat(player, data);
+                    this.onChat(player, data);
                     break;
             }
         }
@@ -178,6 +186,12 @@ exports.Game = Montage.create(Montage, {
         }
     },
 
+    onChat: {
+        value: function(player, data) {
+            this.chatLog.push({player: player, data: data});
+        }
+    },
+
     startRound: {
         value: function() {
             var that = this;
@@ -185,24 +199,22 @@ exports.Game = Montage.create(Montage, {
             
             this.startTime = new Date().getTime();
             this.roundStarted = true;
-            
-            this.ui.start_round(this.timeLimit);
-            
-            // TODO: Base on Draw!
-            /*var last_frame_time = this.startTime;
-            // Start redraw loop (Maybe should be part of renderer? I don't know...)
-            this.frame_timeout = setInterval(function() {
-                var new_frame_time = new Date().getTime();
-                that.on_frame(new_frame_time - last_frame_time);
-                last_frame_time = new_frame_time;
-            }, frame_time);*/
+            this.timeLeft = this.timeLimit;
+
+            var startRoundEvent = document.createEvent("CustomEvent");
+            startRoundEvent.initCustomEvent("startRound", true, true, null);
+            this.dispatchEvent(startRoundEvent);
         }
     },
 
     endRound: {
         value: function(data) {
-            clearInterval(this.frameTimeout);
-            this.ui.endRound(data);
+            this.timeLeft = 0;
+
+            var endRoundEvent = document.createEvent("CustomEvent");
+            endRoundEvent.initCustomEvent("endRound", true, true, null);
+            this.dispatchEvent(endRoundEvent);
+
             this.roundStarted = false;
         }
     },
@@ -279,17 +291,17 @@ exports.Game = Montage.create(Montage, {
             if(data.board) {
                 this.board.sync(data.board);
                 for(i in this.board.tiles)
-                    this.render.draw_tile(i);
+                    this.render.drawTile(i);
             }
             
             if(data.players) {
                 for(i in data.players) {
                     var id = data.players[i].id;
                     if(id in this.players) {
-                        this.players[id].sync(data.players[i], this.ui);
+                        this.players[id].sync(data.players[i]);
                     } else  {
                         var player = Player.create().init(id, this);
-                        player.sync(data.players[i], this.ui);
+                        player.sync(data.players[i]);
                         this.addPlayer(player);
                     }
                 }
@@ -307,13 +319,13 @@ exports.Game = Montage.create(Montage, {
             if(player.id == this.localPlayerId) {
                 this.localPlayer = player;
             }
-            this.ui.addPlayer(player);
+            //this.ui.addPlayer(player);
         }
     },
 
     removePlayer: {
         value: function(player) {
-            this.ui.removePlayer(player);
+            //this.ui.removePlayer(player);
             delete this.players[player.id];
         }
     },
