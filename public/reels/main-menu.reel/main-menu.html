@@ -27,20 +27,26 @@ freely, subject to the following restrictions:
         <script type="text/montage-serialization">
             {
                 "owner": {
-                    "prototype": "reels/gameboard.reel",
+                    "prototype": "reels/main-menu.reel",
                     "properties": {
-                        "element": {"#": "gameboard" },
-                        "tileLayer": {"#": "tileLayer" },
-                        "effectLayer": {"#": "effectLayer" }
+                        "element": {"#": "main-menu" }
                     }
                 }
             }
         </script>
     </head>
     <body>
-        <section data-montage-id="gameboard" class="gameboard">
-            <canvas data-montage-id="tileLayer"></canvas>
-            <canvas data-montage-id="effectLayer"></canvas>
+        <section data-montage-id="main-menu" class="main-menu">
+            <header id="main-header">
+                <h1><span class="logo">H&#x2083;</span> Hyperactive Hexagonal Havoc!</h1>
+            </header>
+            
+            <ul id="main-menu">
+                <li><a href="/setup"><img src="img/quick.png"></img>Quick Game</a></li>
+                <li><a href="/join"><img src="img/multi.png"></img>Play with Friends</a></li>
+            </ul>
         </section>
     </body>
 </html>
+
+

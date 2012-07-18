@@ -27,9 +27,9 @@ freely, subject to the following restrictions:
         <script type="text/montage-serialization">
             {
                 "owner": {
-                    "prototype": "reels/gameboard.reel",
+                    "prototype": "reels/scoreboard.reel",
                     "properties": {
-                        "element": {"#": "gameboard" },
+                        "element": {"#": "scoreboard" },
                         "tileLayer": {"#": "tileLayer" },
                         "effectLayer": {"#": "effectLayer" }
                     }
@@ -38,9 +38,28 @@ freely, subject to the following restrictions:
         </script>
     </head>
     <body>
-        <section data-montage-id="gameboard" class="gameboard">
-            <canvas data-montage-id="tileLayer"></canvas>
-            <canvas data-montage-id="effectLayer"></canvas>
+        <section data-montage-id="scoreboard" class="scoreboard">
+            <h1><span id="winnerName">Toji</span> won the round with <span id="winnerScore">1024</span> points!</h1>
+            
+            <h2>Round Awards:</h2>
+            <ul id="awards">
+                <li>
+                    <h3>Award Title Here</h3>
+                    <div>
+                        <span class="awardWinner">Toji</span> 
+                        <span class="description">won an award of some sort</span>
+                    </div>
+                </li>
+                <li>
+                    <h3>Award Title Here</h3>
+                    <div>
+                        <span class="awardWinner">Toji</span> 
+                        <span class="description">won an award of some sort</span>
+                    </div>
+                </li>
+            </ul>
+            
+            <button id="resultsButton">Done</button>
         </section>
     </body>
 </html>
