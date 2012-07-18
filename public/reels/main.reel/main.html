@@ -7,27 +7,22 @@
 <html>
     <meta charset="utf-8">
     <head>
-        <title>H&#x2083; - Hyperactive Hexagonal Havoc!</title>
-
-        <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-
-        <link rel="stylesheet" href="css/index.css" />
-        
-        <script src="./node_modules/montage/montage.js" data-package="."></script>
         <script type="text/montage-serialization">
             {
                 "owner": {
-                    "module": "montage/ui/loader.reel",
-                    "name": "Loader",
+                    "prototype": "reels/main.reel",
                     "properties": {
-                        "mainModule": "reels/main.reel"
+                        "element": {"#": "main" }
                     }
                 }
             }
         </script>
     </head>
     <body>
-        <div class="logo">Loading...</div>
+        <section data-montage-id="main">
+            
+            <h1>HI MOM!</h1>
+            
+        </section>
     </body>
 </html>

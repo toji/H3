@@ -10,7 +10,7 @@ var template = require('./template.js');
 var fs = require('fs');
 var url = require('url');
 
-var HTTP_PORT = 80;
+var HTTP_PORT = 8080;
 var TCP_PORT = 8181;
 
 // HTTP Server
@@ -21,6 +21,7 @@ server.configure(function() {
     server.use(express.session({ secret: 'baka neko' }));*/
     server.use(express.favicon(__dirname + '/public/favicon.ico'));
     server.use(express.static(__dirname + '/public'));
+    server.use(express.directory(__dirname + '/public'));
 });
 
 server.get('/setup', function(req, res){
