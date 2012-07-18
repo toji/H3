@@ -24,7 +24,7 @@
 var Montage = require("montage/core/core").Montage,
     Component = require("montage/ui/component").Component;
 
-exports.Main = Montage.create(Component, {
+exports.Gameboard = Montage.create(Component, {
     draw: {
         value: function() {
             

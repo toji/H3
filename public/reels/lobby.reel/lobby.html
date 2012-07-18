@@ -1,0 +1,100 @@
+<!-- <copyright>
+Copyright (c) 2012 Brandon Jones
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not
+   be misrepresented as being the original software.
+
+   3. This notice may not be removed or altered from any source
+   distribution.
+</copyright> -->
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <script type="text/montage-serialization">
+            {
+                "owner": {
+                    "prototype": "reels/lobby.reel",
+                    "properties": {
+                        "element": {"#": "lobby" }
+                    }
+                },
+
+                "playerName": {
+                    "prototype": "montage/ui/input-text.reel",
+                    "properties": {
+                        "element": {"#": "playerName"}
+                    }
+                },
+
+                "readyButton": {
+                    "prototype": "montage/ui/button.reel",
+                    "properties": {
+                        "element": {"#": "readyButton"}
+                    }
+                },
+
+                "chatInput": {
+                    "prototype": "montage/ui/input-text.reel",
+                    "properties": {
+                        "element": {"#": "chatInput"}
+                    }
+                },
+            }
+        </script>
+    </head>
+    <body>
+        <section data-montage-id="lobby" class="lobby">
+            <div id="nameField">
+                <span>Name:</span>
+                <input data-montage-id="playerName" type="text"></input>
+                <button data-montage-id="readyButton">Ready?</button>
+            </div>
+            <div id="colorField">
+                <span>Player Color:</span>
+                <div class="colorOption" style="background-color: #666"></div>
+                <div class="colorOption" style="background-color: #8E8"></div>
+                <div class="colorOption" style="background-color: #EE8"></div>
+                <div class="colorOption" style="background-color: #E88"></div>
+                <div class="colorOption" style="background-color: #E8E"></div>
+                <div class="colorOption" style="background-color: #88E"></div>
+                <div class="colorOption" style="background-color: #8EE"></div>
+                <div class="colorOption checked" style="background-color: #FFF"></div>
+            </div>
+            
+            <div id="playerList">
+                <h3>Players</h3>
+            </div>
+            
+            <!--div>
+                <h3>Invite your friends!</h3>
+                <b>Game ID:</b> <span data-montage-id="gameId"></span><br/>
+                <b>URL:</b> http://h3.jit.su/game/<%=game_id%>
+            </div-->
+            
+            <div class="chatBox">
+                <div class="chatField">
+                    <span>Say:</span>
+                    <input type="text" data-montage-id="chatInput"></input>
+                    <button id="chatSubmit">Send</button>
+                </div>
+                <div data-montage-id="chatLog">
+                
+                </div>
+            </div>
+        </section>
+    </body>
+</html>
