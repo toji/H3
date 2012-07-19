@@ -31,8 +31,8 @@ exports.Lobby = Montage.create(Component, {
     },
 
     handleReadyAction: {
-        value: function() {
-            console.log("Ready State Changed");
+        value: function(event) {
+            this.gameState.sendMessage('sync_player', { ready: this.gameState.localPlayer.ready });
         }
     },
     

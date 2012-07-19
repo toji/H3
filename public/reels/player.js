@@ -24,6 +24,12 @@
 var Montage = require("montage/core/core").Montage,
     Globals = require("reels/globals").Globals;
 
+function dist(pt0, pt1) {
+    var dx = (pt1.x - pt0.x);
+    var dy = (pt1.y - pt0.y);
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 exports.Player = Montage.create(Montage, {
     id: {
         value: 0

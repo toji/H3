@@ -12,6 +12,10 @@
     margin-bottom: 10px;
 }
 
+.lobby .gameIdField {
+    float: right;
+}
+
 .lobby .nameField {
     font-size: 1.1em;
     text-align: center;
@@ -99,4 +103,8 @@
     font-size: 12px;
     overflow: auto;
     padding: 5px;
+}
+
+.lobby .chatPlayer {
+    font-weight: bold;
 }

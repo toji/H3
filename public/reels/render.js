@@ -124,7 +124,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 });
                 
                 setTimeout(function() {
-                    var adjacent = that.board.getAdjacentTiles(tile);
+                    var adjacent = that.board.get_adjacent_tiles(tile);
                     for(var i in adjacent)
                         animate(adjacent[i]);
                 }, 50);
@@ -286,7 +286,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
     drawPadding: {
         value: function(ctx, pt, width) {
-            var tc = this.board.tileCoords;
+            var tc = this.board.tile_coords;
             
             ctx.save();
 
@@ -314,11 +314,11 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     // draw a player highlight around a tile (passed by id)
     drawHighlight: {
         value: function(tile, player, ring) {
-            var pt = this.board.tileToPixel(tile);
+            var pt = this.board.tile_to_pixel(tile);
             
             var ctx = this.effectContext;
-            var tc = this.board.tileCoords;
-            var ts = this.board.tileSize;
+            var tc = this.board.tile_coords;
+            var ts = this.board.tile_size;
             if(!ring)
                 ring = 1;
             
@@ -344,7 +344,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
             ctx.closePath();
             
-            ctx.strokeStyle = player.css_color();
+            ctx.strokeStyle = player.cssColor;
             ctx.lineWidth = Globals.highlightWidth * (1/scale);
             ctx.stroke();
             

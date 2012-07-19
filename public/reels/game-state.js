@@ -71,6 +71,11 @@ exports.GameState = Montage.create(Montage, {
         value: false
     },
 
+    chatLog: {
+        value: [],
+        distinct: true
+    },
+
     // Renderer
     _render: {
         value: null
@@ -198,9 +203,18 @@ exports.GameState = Montage.create(Montage, {
         }
     },
 
+    serverPlayer: {
+        value: {
+            name: "○ Server ○"
+        }
+    },
+
     onChat: {
-        value: function(player, data) {
-            this.chatLog.push({player: player, data: data});
+        value: function(player, message) {
+            if(player === null) {
+                player = this.serverPlayer;
+            }
+            this.chatLog.push({player: player, message: message});
         }
     },
 
@@ -354,7 +368,7 @@ exports.GameState = Montage.create(Montage, {
 
     clearTiles: {
         value: function(path, lastTile, player) {
-            this.claimSnd.play();
+            //this.claimSnd.play();
             
             this.render.clearTiles(path, lastTile, player == this.localPlayer);
             

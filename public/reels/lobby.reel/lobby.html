@@ -83,7 +83,7 @@ freely, subject to the following restrictions:
                     },
                     "listeners": [{
                         "type": "action",
-                        "listener": "@owner",
+                        "listener": {"@": "owner"},
                         "capture": false
                     }]
                 },
@@ -123,6 +123,36 @@ freely, subject to the following restrictions:
                     "properties": {
                         "element": {"#": "chatInput"}
                     }
+                },
+
+                "chatLog": {
+                    "prototype": "montage/ui/repetition.reel",
+                    "properties": {
+                        "element": {"#": "chatLog"}
+                    },
+                    "bindings": {
+                        "objects": {"<-": "@owner.gameState.chatLog"}
+                    }
+                },
+
+                "chatPlayer": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "chatPlayer"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@chatLog.objectAtCurrentIteration.player.name"}
+                    }
+                },
+
+                "chatMessage": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "chatMessage"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@chatLog.objectAtCurrentIteration.message"}
+                    }
                 }
             }
         </script>
@@ -130,11 +160,11 @@ freely, subject to the following restrictions:
     <body>
         <section data-montage-id="lobby" class="lobby">
             <div id="gameDetails">
-                <div>
+                <div class="gameIdField">
                     <b>Game ID:</b> <span data-montage-id="gameId"></span>
                 </div>
-                <div>
-                    <b>URL:</b> <a data-montage-id="gameLink" href="http://h3.jit.su/game/">http://h3.jit.su/game/</a>
+                <div class="gameUrlField">
+                    <b>Join URL:</b> <a data-montage-id="gameLink" href="http://h3.jit.su/game/">http://h3.jit.su/game/</a>
                 </div>
             </div>
             <div class="nameField">
@@ -178,7 +208,7 @@ freely, subject to the following restrictions:
                     <button id="chatSubmit">Send</button>
                 </div>
                 <div data-montage-id="chatLog" class="chatLog">
-                
+                    <span data-montage-id="chatPlayer" class="chatPlayer"></span>: <span data-montage-id="chatMessage" class="chatMessage"></span><br/>
                 </div>
             </div>
         </section>
