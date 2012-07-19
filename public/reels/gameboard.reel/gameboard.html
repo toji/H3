@@ -44,6 +44,26 @@ freely, subject to the following restrictions:
                     "bindings": {
                         "value": {"<-": "@owner.gameState.timeLeft"}
                     }
+                },
+
+                "playerName": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "playerName"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@owner.gameState.localPlayer.name"}
+                    }
+                },
+
+                "playerScore": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "playerScore"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@owner.gameState.localPlayer.score"}
+                    }
                 }
             }
         </script>
@@ -53,6 +73,10 @@ freely, subject to the following restrictions:
             <div class="timer">
                 <img src="img/clock.png">
                 <span data-montage-id="timeLeft" class="timeLeft"></span>
+            </div>
+            <div class="scoreboard">
+                <span data-montage-id="playerName" class="playerName"></span>
+                <span data-montage-id="playerScore" class="playerScore"></span>
             </div>
             <canvas data-montage-id="tileLayer" class="tileLayer"></canvas>
             <canvas data-montage-id="effectLayer" class="effectLayer"></canvas>

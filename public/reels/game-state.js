@@ -26,6 +26,12 @@ var Montage = require("montage/core/core").Montage,
     Board = require("js/board").Board,
     Globals = require("reels/globals").Globals;
 
+function dist(pt0, pt1) {
+    var dx = (pt1.x - pt0.x);
+    var dy = (pt1.y - pt0.y);
+    return Math.sqrt(dx * dx + dy * dy);
+}
+
 exports.GameState = Montage.create(Montage, {
     // Server state
     id: {
@@ -63,7 +69,15 @@ exports.GameState = Montage.create(Montage, {
         value: null
     },
 
+    timeStarted: {
+        value: 0
+    },
+
     timeLeft: {
+        value: 0
+    },
+
+    timeLimit: {
         value: 0
     },
 
@@ -88,6 +102,10 @@ exports.GameState = Montage.create(Montage, {
         set: function(value) {
             this._render = value;
             this._render.bindGame(this);
+
+            var i;
+            for(i in this.board.tiles)
+                this._render.drawTile(i);
         }
     },
 
@@ -221,9 +239,8 @@ exports.GameState = Montage.create(Montage, {
     startRound: {
         value: function() {
             var that = this;
-            var frame_time = 33;
             
-            this.startTime = new Date().getTime();
+            this.timeStarted = new Date().getTime();
             this.roundStarted = true;
             this.timeLeft = this.timeLimit;
 
@@ -235,6 +252,7 @@ exports.GameState = Montage.create(Montage, {
 
     endRound: {
         value: function(data) {
+            this.timeStarted = 0;
             this.timeLeft = 0;
 
             var endRoundEvent = document.createEvent("CustomEvent");
@@ -246,7 +264,9 @@ exports.GameState = Montage.create(Montage, {
     },
 
     onFrame: {
-        value: function(frameTime) {
+        value: function(now, frameTime) {
+            this.timeLeft = this.timeLimit - Math.floor((now - this.timeStarted) / 1000);
+
             for(var p in this.players)
                 this.players[p].fadeTrail(frameTime);
             
@@ -256,9 +276,9 @@ exports.GameState = Montage.create(Montage, {
 
     addPoint: {
         value: function(x, y, first) {
-            var pt0 = this.last_mouse_pt;
+            var pt0 = this.lastMousePt;
             var pt1 = {x: x, y: y};
-            this.last_mouse_pt = pt1;
+            this.lastMousePt = pt1;
             
             var syncPt = this.localPlayer.updateTrail(this.lastMousePt);
             
@@ -337,8 +357,8 @@ exports.GameState = Montage.create(Montage, {
                 }
             }
             
-            if(data.timeLimit) {
-                this.timeLimit = data.timeLimit;
+            if(data.time_limit) {
+                this.timeLimit = data.time_limit;
             }
         }
     },

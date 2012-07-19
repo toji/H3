@@ -24,3 +24,14 @@
     cursor: pointer !important;
     z-index: 1;
 }
+
+.gameboard .timer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+
+.gameboard .scoreboard {
+    position: relative;
+    z-index: 2;
+}
