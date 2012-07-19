@@ -24,7 +24,6 @@
 var Montage = require("montage/core/core").Montage,
     Component = require("montage/ui/component").Component,
     Globals = require("reels/globals").Globals,
-    GameState = require("reels/game-state").GameState,
     CanvasRenderer = require("reels/render").CanvasRenderer;
 
 exports.Gameboard = Montage.create(Component, {
@@ -36,11 +35,11 @@ exports.Gameboard = Montage.create(Component, {
         value: null
     },
 
-    gameState: {
+    renderer: {
         value: null
     },
 
-    renderer: {
+    gameState: {
         value: null
     },
 
@@ -53,7 +52,7 @@ exports.Gameboard = Montage.create(Component, {
             this.effectLayer.height = Globals.board.height;
 
             this.renderer = CanvasRenderer.create().init(this.tileLayer, this.effectLayer);
-            this.gameState = GameState.create().init(this.renderer);
+            this.gameState.render = this.renderer;
 
             this.gameState.addEventListener("startRound", this, false);
             this.gameState.addEventListener("endRound", this, false);

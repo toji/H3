@@ -28,7 +28,7 @@
         background-color: #AAA;
     }
     50% {
-        background-color: #8F8;
+        background-color: #F88;
     }
     to { 
         background-color: #AAA;
@@ -42,7 +42,7 @@
 }
 
 .lobby .readyButton.ready {
-    background-color: #F88;
+    background-color: #8F8;
     -webkit-animation-name: none; 
 }
 

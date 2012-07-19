@@ -29,6 +29,12 @@ exports.Lobby = Montage.create(Component, {
     gameState: {
         value: null
     },
+
+    handleReadyAction: {
+        value: function() {
+            console.log("Ready State Changed");
+        }
+    },
     
     draw: {
         value: function() {

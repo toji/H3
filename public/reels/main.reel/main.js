@@ -22,12 +22,32 @@
  </copyright> */
 
 var Montage = require("montage/core/core").Montage,
-    Component = require("montage/ui/component").Component;
+    Component = require("montage/ui/component").Component,
+    GameState = require("reels/game-state").GameState,
+    Converter = require("montage/core/converter/converter").Converter;
 
 exports.Main = Montage.create(Component, {
+    gameState: {
+        value: null
+    },
+
+    templateDidLoad: {
+        value: function() {
+            this.gameState = GameState.create().init();
+        }
+    },
+
     draw: {
         value: function() {
             
+        }
+    }
+});
+
+exports.GameStageConverter = Montage.create(Converter, {
+    convert: {
+        value: function(roundStarted) {
+            return roundStarted ? "gameboard" : "lobby";
         }
     }
 });

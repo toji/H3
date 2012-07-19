@@ -72,8 +72,18 @@ exports.GameState = Montage.create(Montage, {
     },
 
     // Renderer
-    render: {
+    _render: {
         value: null
+    },
+
+    render: {
+        get: function() {
+            return this._render;
+        },
+        set: function(value) {
+            this._render = value;
+            this._render.bindGame(this);
+        }
     },
 
     frameTimeout: {
@@ -86,11 +96,8 @@ exports.GameState = Montage.create(Montage, {
     },
 
     init: {
-        value: function(renderer) {
+        value: function() {
             this.board = new Board(10, 48, Globals.board.width-20, Globals.board.height-58, Globals.theme);
-
-            this.render = renderer;
-            this.render.bindGame(this);
 
             // Socket connection
             var game = this;
@@ -129,7 +136,7 @@ exports.GameState = Montage.create(Montage, {
                 
                 case 'sync_player':
                     if(!player) {
-                        player = new Player(playerId, this);
+                        player = Player.create().init(playerId, this);
                         this.addPlayer(player);
                     }
                     player.sync(data);
@@ -245,7 +252,8 @@ exports.GameState = Montage.create(Montage, {
                 this.sendMessage('add_trail', this.board.scale_point(this.lastMousePt));
             }
             
-            this.render.drawTrail(this.localPlayer, this.lastMousePt);
+            if(this.render)
+                this.render.drawTrail(this.localPlayer, this.lastMousePt);
 
             var tile;
             
@@ -295,8 +303,11 @@ exports.GameState = Montage.create(Montage, {
             
             if(data.board) {
                 this.board.sync(data.board);
-                for(i in this.board.tiles)
-                    this.render.drawTile(i);
+                if(this.render) {
+                    for(i in this.board.tiles)
+                        this.render.drawTile(i);
+                }
+                
             }
             
             if(data.players) {
@@ -371,14 +382,14 @@ exports.GameState = Montage.create(Montage, {
 
     redrawBoard: {
         value: function(frameTime) {
+            if(!this.render) { return; }
             this.render.clear();
     
             this.render.startFrame(frameTime);
             
             this.renderHighlights(frameTime);
             
-            for(var p in this.players)
-            {
+            for(var p in this.players) {
                 if(p == this.localPlayerId)
                     this.render.drawTrail(this.players[p], this.lastMousePt);
                 else
@@ -391,6 +402,7 @@ exports.GameState = Montage.create(Montage, {
 
     renderHighlights: {
         value: function(frameTime) {
+            if(!this.render) { return; }
             var highlightCount = [];
             var i;
     

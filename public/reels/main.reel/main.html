@@ -35,18 +35,34 @@ freely, subject to the following restrictions:
 
                 "lobby": {
                     "prototype": "reels/lobby.reel",
-                    "properties": {
-                        "element": {"#": "lobby" }
-                    },
                     "bindings": {
-                        "gameState": {"<-": "@gameboard.gameState"}
+                        "gameState": {"<-": "@owner.gameState"}
                     }
                 },
 
                 "gameboard": {
                     "prototype": "reels/gameboard.reel",
+                    "bindings": {
+                        "gameState": {"<-": "@owner.gameState"}
+                    }
+                },
+
+                "gameStageConverter": {
+                    "prototype": "reels/main.reel[GameStageConverter]"
+                },
+
+                "content": {
+                    "prototype": "montage/ui/substitution.reel",
                     "properties": {
-                        "element": {"#": "gameboard" }
+                        "element": {"#": "content"},
+                        "switchComponents": {
+                            "lobby": {"@": "lobby"},
+                            "gameboard": {"@": "gameboard"}
+                        },
+                        "switchValue": "lobby"
+                    },
+                    "bindings": {
+                        "switchValue": {"<-": "@owner.gameState.roundStarted", "converter": {"@": "gameStageConverter"}}
                     }
                 }
             }
@@ -54,15 +70,7 @@ freely, subject to the following restrictions:
     </head>
     <body>
         <section data-montage-id="main">
-
-            <section data-montage-id="lobby">
-
-            </section>
-            
-            <section data-montage-id="gameboard">
-
-            </section>
-            
+            <div data-montage-id="content"></div>
         </section>
     </body>
 </html>

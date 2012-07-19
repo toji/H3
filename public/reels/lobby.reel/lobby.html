@@ -70,10 +70,22 @@ freely, subject to the following restrictions:
                 },
 
                 "readyButton": {
-                    "prototype": "montage/ui/button.reel",
+                    "prototype": "montage/ui/toggle-button.reel",
                     "properties": {
-                        "element": {"#": "readyButton"}
-                    }
+                        "element": {"#": "readyButton"},
+                        "identifier": "ready",
+                        "pressedClass": "ready",
+                        "pressedLabel": "Ready",
+                        "unpressedLabel": "Not Ready"
+                    },
+                    "bindings": {
+                        "pressed": {"<->": "@owner.gameState.localPlayer.ready"}
+                    },
+                    "listeners": [{
+                        "type": "action",
+                        "listener": "@owner",
+                        "capture": false
+                    }]
                 },
 
                 "playerList": {
