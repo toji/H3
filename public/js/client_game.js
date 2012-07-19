@@ -10,7 +10,7 @@ var Game = function(ui_handler, renderer)
     this.player_limit = 4;
     this.players = {};
     
-    this.board = new Board(10, 48, global.board.width-20, global.board.height-58);
+    this.board = new Board(10, 48, global.board.width-20, global.board.height-58, global.theme);
     
     // Client state
     this.local_player_id = -1;
