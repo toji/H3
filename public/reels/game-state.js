@@ -41,6 +41,11 @@ exports.GameState = Montage.create(Montage, {
         distinct: true
     },
 
+    playerList: {
+        value: [],
+        distinct: true
+    },
+
     board: {
         value: null
     },
@@ -316,16 +321,22 @@ exports.GameState = Montage.create(Montage, {
     addPlayer: {
         value: function(player) {
             this.players[player.id] = player;
+            this.playerList.push(player);
             if(player.id == this.localPlayerId) {
                 this.localPlayer = player;
             }
-            //this.ui.addPlayer(player);
         }
     },
 
     removePlayer: {
         value: function(player) {
-            //this.ui.removePlayer(player);
+            var i;
+            for(i = 0; i < this.playerList.length; ++i) {
+                if(this.playerList[i] == player) {
+                    this.playerList.splice(i, 1);
+                    break;
+                }
+            }
             delete this.players[player.id];
         }
     },

@@ -23,6 +23,7 @@
 
 var Montage = require("montage/core/core").Montage,
     Component = require("montage/ui/component").Component,
+    Globals = require("reels/globals").Globals,
     GameState = require("reels/game-state").GameState,
     CanvasRenderer = require("reels/render").CanvasRenderer;
 
@@ -45,6 +46,12 @@ exports.Gameboard = Montage.create(Component, {
 
     templateDidLoad: {
         value: function() {
+            this.tileLayer.width = Globals.board.width;
+            this.tileLayer.height = Globals.board.height;
+
+            this.effectLayer.width = Globals.board.width;
+            this.effectLayer.height = Globals.board.height;
+
             this.renderer = CanvasRenderer.create().init(this.tileLayer, this.effectLayer);
             this.gameState = GameState.create().init(this.renderer);
 
