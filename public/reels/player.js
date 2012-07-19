@@ -111,7 +111,7 @@ exports.Player = Montage.create(Montage, {
     updateTrail: {
         value: function(pt) {
             if(this.trail.length === 0) {
-                this.trail.push({ x: pt.x, y: pt.y, life: Globals.trail_life });
+                this.trail.push({ x: pt.x, y: pt.y, life: Globals.trailLife });
                 return true;
             }
             
@@ -121,10 +121,10 @@ exports.Player = Montage.create(Montage, {
             if(dist(pt, pt2) < 10)
                 return false;
                 
-            this.trail.push({ x: pt.x, y: pt.y, life: Globals.trail_life });
+            this.trail.push({ x: pt.x, y: pt.y, life: Globals.trailLife });
             
             // Make sure the trail never grows too long
-            while(this.trail.length > Globals.max_trail_length) {
+            while(this.trail.length > Globals.maxTrailLength) {
                 this.trail.shift();
             }
             

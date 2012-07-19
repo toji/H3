@@ -63,7 +63,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
     startFrame: {
         value: function(frameTime) {
             for(var i = this.frameStartCallbacks.length - 1; i >= 0; --i) {
-                var keep = this.frameStartCallbacks[i](frame_time);
+                var keep = this.frameStartCallbacks[i](frameTime);
                 if(!keep) {
                     this.frameStartCallbacks.splice(i, 1);
                 }
@@ -74,7 +74,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
     endFrame: {
         value: function(frameTime) {
             for(var i = this.frameEndCallbacks.length - 1; i >= 0; --i) {
-                var keep = this.frameEndCallbacks[i](frame_time);
+                var keep = this.frameEndCallbacks[i](frameTime);
                 if(!keep) {
                     this.frameEndCallbacks.splice(i, 1);
                 }
@@ -103,19 +103,20 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 delete tiles[tile];
                 
                 that.drawTileEx(true, tile, type, 1, 1);
-                that.clear_tile(tile);
+                that.clearTile(tile);
             
                 var life = totalLife + parseInt(i, 10) * 5;
                 
                 that.frameStartCallbacks.push(function(frame_time) {
-                    var mod;
+                    var mod, linearMod;
                     if(out) {
-                        mod = jQuery.easing.easeOutBack(null, totalLife - life, 0, 1, totalLife);
-                        var linear_mod = (totalLife - life) / totalLife;
-                        that.drawTileEx(true, tile, type, 1 + (mod*0.5), 1-linear_mod);
+                        //mod = jQuery.easing.easeOutBack(null, totalLife - life, 0, 1, totalLife);
+                        linearMod = (totalLife - life) / totalLife;
+                        that.drawTileEx(true, tile, type, 1 + (linearMod*0.5), 1-linearMod);
                     } else {
-                        mod = jQuery.easing.easeOutCubic(null, totalLife - life, 0, 1, totalLife);
-                        that.drawTileEx(true, tile, type, 1-mod, 1-mod);
+                        //mod = jQuery.easing.easeOutCubic(null, totalLife - life, 0, 1, totalLife);
+                        linearMod = (totalLife - life) / totalLife;
+                        that.drawTileEx(true, tile, type, 1-linearMod, 1-linearMod);
                     }
                     
                     life -= frame_time;
@@ -142,23 +143,24 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
             for(var t in tiles) {
                 function animate() {
                     var i = t;
-                    var life = totalLife + parseInt(i) * 5;
+                    var life = totalLife + parseInt(i, 10) * 5;
                     
-                    that.frame_end_callbacks.push(function(frame_time) {
-                        var mod = jQuery.easing.easeOutBack(null, Math.max(totalLife - life, 0), 0, 1, totalLife);
+                    that.frameEndCallbacks.push(function(frame_time) {
+                        //var mod = jQuery.easing.easeOutBack(null, Math.max(totalLife - life, 0), 0, 1, totalLife);
+                        var linearMod = (totalLife - life) / totalLife;
                     
-                        that.drawTileEx(true, i, tiles[i], mod, mod);
+                        that.drawTileEx(true, i, tiles[i], linearMod, linearMod);
                         
                         life -= frame_time;
                         
                         if(life <= 0) {
                             // Not 100% convinced this should be here, don't care at the moment, though.
-                            that.game.setSile(i, tiles[i]);
+                            that.game.setTile(i, tiles[i]);
                         }
                         
                         return life > 0;
                     });
-                };
+                }
                 animate();
             }
         }
@@ -271,7 +273,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             var ts = this.board.tile_size;
             var tc = this.board.tile_coords;
             
-            this.draw_padding(ctx, pt, ts.padding);
+            this.drawPadding(ctx, pt, ts.padding);
             
             var sizeX = (ts.b - ts.padding);
             var sizeY = (ts.a - ts.padding);
