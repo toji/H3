@@ -22,7 +22,8 @@
  </copyright> */
 
 var Montage = require("montage/core/core").Montage,
-    Component = require("montage/ui/component").Component;
+    Component = require("montage/ui/component").Component,
+    Converter = require("montage/core/converter/converter").Converter;
 
 exports.Lobby = Montage.create(Component, {
     gameState: {
@@ -32,6 +33,14 @@ exports.Lobby = Montage.create(Component, {
     draw: {
         value: function() {
             
+        }
+    }
+});
+
+exports.GameUrlConverter = Montage.create(Converter, {
+    convert: {
+        value: function(value) {
+            return "http://h3.jit.su/game/" + value;
         }
     }
 });

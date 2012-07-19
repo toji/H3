@@ -1,0 +1,102 @@
+.lobby {
+    background-color: #DDD;
+    border-radius: 5px;
+    border: 2px solid #AAA;
+    height: 616px;
+    width: 456px;
+    padding: 10px;
+    position: relative;
+}
+
+.lobby > div {
+    margin-bottom: 10px;
+}
+
+.lobby .nameField {
+    font-size: 1.1em;
+    text-align: center;
+}
+
+.lobby .localPlayerName {
+    width: 250px;
+    font-size: 1.0em;
+    padding: 3px;
+}
+
+@-webkit-keyframes readyPulse {
+    from {
+        background-color: #AAA;
+    }
+    50% {
+        background-color: #8F8;
+    }
+    to { 
+        background-color: #AAA;
+    }
+}
+
+.lobby .readyButton {
+    -webkit-animation-name: readyPulse; 
+    -webkit-animation-duration: 2.0s;
+    -webkit-animation-iteration-count: infinite;
+}
+
+.lobby .readyButton.ready {
+    background-color: #F88;
+    -webkit-animation-name: none; 
+}
+
+.lobby .colorField {
+    height: 45px;
+}
+
+.lobby .colorField span {
+    float: left;
+    padding-top: 15px;
+}
+
+.lobby .colorOption {
+    width: 36px;
+    height: 25px;
+    margin: 3px;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 1.2em;
+    text-align: center;
+    padding: 5px 0 5px 0;
+    float: right;
+    border: 1px solid #666;
+}
+
+.lobby .colorOption.checked, .playerScore .color.checked {
+    background-image: url("/img/check.png");
+    background-repeat: no-repeat;
+    background-position: center center;
+}
+
+.lobby .chatBox {
+    text-align: center;
+    position: absolute;
+    bottom: 0px;
+}
+
+.lobby .chatField {
+    margin-bottom: 3px;
+}
+
+.lobby .chatInput {
+    width: 350px;
+    padding: 3px;
+}
+
+.lobby .chatLog {
+    width: 445px;
+    height: 250px;
+    background-color: #FFF;
+    border: 1px solid #66A;
+    border-radius: 3px;
+    text-align: left;
+    font-size: 12px;
+    overflow: auto;
+    padding: 5px;
+}
