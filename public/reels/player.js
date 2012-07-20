@@ -50,6 +50,13 @@ exports.Player = Montage.create(Montage, {
     cssColor: {
         get: function() {
             return 'rgb(' + this.color.r + ',' + this.color.g + ',' + this.color.b + ')';
+        },
+        set: function(value) {
+            if(!value) {
+                return;
+            }
+            var rgb = value.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+            this.color = {r: parseInt(rgb[1], 10), g: parseInt(rgb[2], 10), b: parseInt(rgb[3], 10)};
         }
     },
 

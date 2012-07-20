@@ -73,7 +73,7 @@ exports.GameState = Montage.create(Montage, {
     },
 
     localPlayer: {
-        value: -1
+        value: null
     },
 
     lastMousePt: {

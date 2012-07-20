@@ -31,8 +31,11 @@ freely, subject to the following restrictions:
                     "prototype": "reels/lobby.reel",
                     "properties": {
                         "element": {"#": "lobby" },
-                        "chatInput": {"@": "chatInput"},
+                        "readyButton": {"@": "readyButton"},
                         "chatForm": {"#": "chatForm"}
+                    },
+                    "bindings": {
+                        "localPlayerColor": {"<-": "@owner.gameState.localPlayer.color"}
                     }
                 },
 
@@ -71,6 +74,53 @@ freely, subject to the following restrictions:
                     }
                 },
 
+                "colorController": {
+                    "prototype": "montage/ui/controller/array-controller",
+                    "properties": {
+                        "content": [
+                            "rgb(96,96,96)",
+                            "rgb(127,240,127)",
+                            "rgb(240,240,127)",
+                            "rgb(240,127,127)",
+                            "rgb(240,127,240)",
+                            "rgb(127,127,240)",
+                            "rgb(127,240,240)",
+                            "rgb(255,255,255)"
+                        ]
+                    },
+                    "bindings": {
+                        "selectedObjects.0": {"<->": "@owner.gameState.localPlayer.cssColor"}
+                    }
+                },
+
+                "localPlayerColorList": {
+                    "prototype": "montage/ui/repetition.reel",
+                    "properties": {
+                        "element": {"#": "localPlayerColorList"},
+                        "contentController": {"@": "colorController"}
+                    }
+                },
+
+                "localPlayerColorBack": {
+                    "prototype": "reels/background-color.reel",
+                    "properties": {
+                        "element": {"#": "localPlayerColorBack"}
+                    },
+                    "bindings": {
+                        "backgroundColor": {"<-": "@localPlayerColorList.objectAtCurrentIteration"}
+                    }
+                },
+
+                "localPlayerColor": {
+                    "prototype": "montage/ui/input-radio.reel",
+                    "properties": {
+                        "element": {"#": "localPlayerColor"}
+                    },
+                    "bindings": {
+                        "checked": {"<->": "@localPlayerColorList.selectionAtCurrentIteration"}
+                    }
+                },
+
                 "readyButton": {
                     "prototype": "montage/ui/toggle-button.reel",
                     "properties": {
@@ -97,6 +147,16 @@ freely, subject to the following restrictions:
                     },
                     "bindings": {
                         "objects": {"<-": "@owner.gameState.playerList"}
+                    }
+                },
+
+                "playerColor": {
+                    "prototype": "reels/background-color.reel",
+                    "properties": {
+                        "element": {"#": "playerColor"}
+                    },
+                    "bindings": {
+                        "backgroundColor": {"<-": "@playerList.objectAtCurrentIteration.cssColor"}
                     }
                 },
 
@@ -211,14 +271,11 @@ freely, subject to the following restrictions:
             </div>
             <div class="colorField">
                 <span>Player Color:</span>
-                <div class="colorOption" style="background-color: #666"></div>
-                <div class="colorOption" style="background-color: #8E8"></div>
-                <div class="colorOption" style="background-color: #EE8"></div>
-                <div class="colorOption" style="background-color: #E88"></div>
-                <div class="colorOption" style="background-color: #E8E"></div>
-                <div class="colorOption" style="background-color: #88E"></div>
-                <div class="colorOption" style="background-color: #8EE"></div>
-                <div class="colorOption checked" style="background-color: #FFF"></div>
+                <div data-montage-id="localPlayerColorList">
+                    <div data-montage-id="localPlayerColorBack" class="colorOption">
+                        <input type="radio" data-montage-id="localPlayerColor" name="localPlayerColor" />
+                    </div>
+                </div>
             </div>
             
             <div>

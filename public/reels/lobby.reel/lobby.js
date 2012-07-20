@@ -43,6 +43,7 @@ exports.Lobby = Montage.create(Component, {
         value: function() {
             this.chatForm.addEventListener("submit", this, false);
             this.gameState.addEventListener("startRound", this, false);
+            this.gameState.addEventListener("endRound", this, false);
         }
     },
 
@@ -54,7 +55,7 @@ exports.Lobby = Montage.create(Component, {
 
     handleReadyAction: {
         value: function(event) {
-            this.gameState.sendMessage('sync_player', { ready: this.gameState.localPlayer.ready });
+            this.gameState.sendMessage("sync_player", { ready: this.gameState.localPlayer.ready });
         }
     },
 
@@ -71,6 +72,35 @@ exports.Lobby = Montage.create(Component, {
             this.chatValue = "";
             event.preventDefault();
             return false;
+        }
+    },
+
+    _localPlayerColor: {
+        value: {r: 255, g: 255, b: 255}
+    },
+
+    localPlayerColor: {
+        get: function() {
+            return this._localPlayerColor;
+        },
+        set: function(value) {
+            if(!value) { return; }
+            if(value.r != this._localPlayerColor.r ||
+               value.g != this._localPlayerColor.g ||
+               value.b != this._localPlayerColor.b) {
+                this._localPlayerColor = value;
+                this.gameState.sendMessage('sync_player', { color: value } );
+            }
+        }
+    },
+
+    draw: {
+        value: function() {
+            // TODO: Aw HELL Naw!
+            if(!this.gameState.localPlayer.ready) {
+                this.gameState.localPlayer.ready = true;
+                this.gameState.localPlayer.ready = false;
+            }
         }
     }
 });
