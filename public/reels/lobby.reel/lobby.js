@@ -30,9 +30,32 @@ exports.Lobby = Montage.create(Component, {
         value: null
     },
 
+    chatInput: {
+        value: null
+    },
+
+    chatForm: {
+        value: null
+    },
+
+    templateDidLoad: {
+        value: function() {
+            this.chatForm.addEventListener("submit", this, false);
+        }
+    },
+
     handleReadyAction: {
         value: function(event) {
             this.gameState.sendMessage('sync_player', { ready: this.gameState.localPlayer.ready });
+        }
+    },
+
+    handleSubmit: {
+        value: function(event) {
+            this.gameState.sendMessage('chat', this.chatInput.value);
+            this.chatInput.value = "";
+            event.preventDefault();
+            return false;
         }
     },
     
