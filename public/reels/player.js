@@ -43,8 +43,19 @@ exports.Player = Montage.create(Montage, {
         value: null
     },
 
-    color: {
+    _color: {
         value: {r: 255, g: 255, b: 255 }
+    },
+
+    color: {
+        get: function() {
+            return this._color;
+        },
+        set: function(value) {
+            this.dispatchPropertyChange("cssColor", function() {
+                this._color = value;
+            });
+        }
     },
 
     cssColor: {

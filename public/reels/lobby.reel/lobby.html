@@ -160,6 +160,16 @@ freely, subject to the following restrictions:
                     }
                 },
 
+                "playerReady": {
+                    "prototype": "montage/ui/input-checkbox.reel",
+                    "properties": {
+                        "element": {"#": "playerReady"}
+                    },
+                    "bindings": {
+                        "checked": {"<-": "@playerList.objectAtCurrentIteration.ready"}
+                    }
+                },
+
                 "playerName": {
                     "prototype": "montage/ui/dynamic-text.reel",
                     "properties": {
@@ -282,7 +292,9 @@ freely, subject to the following restrictions:
                 <h3>Players</h3>
                 <div data-montage-id="playerList" class="playerList">
                     <div class="playerScore">
-                        <div data-montage-id="playerColor" class="color"></div>
+                        <div data-montage-id="playerColor" class="color">
+                            <input type="checkbox" data-montage-id="playerReady" disabled />
+                        </div>
                         <span data-montage-id="playerName" class="name"></span>
                         <span data-montage-id="playerScore" class="score"></span>
                     </div>

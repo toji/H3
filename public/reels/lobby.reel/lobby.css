@@ -82,9 +82,7 @@
     background-position: center center;
 }
 
-.playerScore .color
-{
-    float: left;
+.lobby .playerScore .color {
     display: inline-block;
     width: 20px;
     height: 20px;
