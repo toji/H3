@@ -61,8 +61,6 @@ exports.Gameboard = Montage.create(Component, {
             this.gameState.addEventListener("startRound", this, false);
             this.gameState.addEventListener("endRound", this, false);
 
-            var self = this;
-
             this.effectLayer.addEventListener("mousedown", this, false);
             this.effectLayer.addEventListener("mousemove", this, false);
             document.addEventListener("mouseup", this, false);
@@ -70,22 +68,6 @@ exports.Gameboard = Montage.create(Component, {
             this.effectLayer.addEventListener("touchstart", this, false);
             this.effectLayer.addEventListener("touchmove", this, false);
             document.addEventListener("touchend", this, false);
-            
-            /*this.effectLayer.ontouchstart = function(event) { that.on_touch_down(event); return false; }
-            this.effectLayer.ontouchmove = function(event) { that.on_touch_move(event, false); return false; } 
-            document.ontouchend = function(event) { that.on_input_end(); return false; }
-            
-            this.effectLayer.addEventListener( 'MozTouchDown', function(event) { 
-                that.on_mouse_down(event); return false; 
-            }, false );
-            
-            this.effectLayer.addEventListener( 'MozTouchMove', function(event) { 
-                that.on_mouse_move(event, false); return false; 
-            }, false );
-            
-            document.addEventListener( 'MozTouchUp', function(event) { 
-                that.on_input_end(); return false; 
-            }, false );*/
         }
     },
 
@@ -98,7 +80,7 @@ exports.Gameboard = Montage.create(Component, {
 
     handleEndRound: {
         value: function() {
-            
+            this.gameState.currentStage = "awards";
         }
     },
 
@@ -149,7 +131,7 @@ exports.Gameboard = Montage.create(Component, {
                 var y = event.touches[0].pageY - this._element.offsetTop;
                 
                 this.gameState.addPoint(x, y, first);
-                
+
                 event.preventDefault();
                 return false;
             }

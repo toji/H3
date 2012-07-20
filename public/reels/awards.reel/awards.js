@@ -22,18 +22,16 @@
  </copyright> */
 
 var Montage = require("montage/core/core").Montage,
-    Component = require("montage/ui/component").Component,
-    GameState = require("reels/game-state").GameState,
-    Converter = require("montage/core/converter/converter").Converter;
+    Component = require("montage/ui/component").Component;
 
-exports.Main = Montage.create(Component, {
+exports.Awards = Montage.create(Component, {
     gameState: {
         value: null
     },
 
-    templateDidLoad: {
+    handleSetupAction: {
         value: function() {
-            this.gameState = GameState.create().init();
+            this.gameState.currentStage = "lobby";
         }
     }
 });

@@ -1,0 +1,146 @@
+<!-- <copyright>
+Copyright (c) 2012 Brandon Jones
+
+This software is provided 'as-is', without any express or implied
+warranty. In no event will the authors be held liable for any damages
+arising from the use of this software.
+
+Permission is granted to anyone to use this software for any purpose,
+including commercial applications, and to alter it and redistribute it
+freely, subject to the following restrictions:
+
+   1. The origin of this software must not be misrepresented; you must not
+   claim that you wrote the original software. If you use this software
+   in a product, an acknowledgment in the product documentation would be
+   appreciated but is not required.
+
+   2. Altered source versions must be plainly marked as such, and must not
+   be misrepresented as being the original software.
+
+   3. This notice may not be removed or altered from any source
+   distribution.
+</copyright> -->
+<!DOCTYPE html>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <script type="text/montage-serialization">
+            {
+                "owner": {
+                    "prototype": "reels/awards.reel",
+                    "properties": {
+                        "element": {"#": "awards" }
+                    }
+                },
+
+                "scoreList": {
+                    "prototype": "montage/ui/repetition.reel",
+                    "properties": {
+                        "element": {"#": "scoreList"}
+                    },
+                    "bindings": {
+                        "objects": {"<-": "@owner.gameState.rankedPlayers"}
+                    }
+                },
+
+                "scorePlayer": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "scorePlayer"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@scoreList.objectAtCurrentIteration.name"}
+                    }
+                },
+
+                "score": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "score"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@scoreList.objectAtCurrentIteration.score"}
+                    }
+                },
+
+                "awardList": {
+                    "prototype": "montage/ui/repetition.reel",
+                    "properties": {
+                        "element": {"#": "awardList"}
+                    },
+                    "bindings": {
+                        "objects": {"<-": "@owner.gameState.awards"}
+                    }
+                },
+
+                "awardTitle": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "awardTitle"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@awardList.objectAtCurrentIteration.name"}
+                    }
+                },
+
+                "awardPlayer": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "awardPlayer"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@awardList.objectAtCurrentIteration.player"}
+                    }
+                },
+
+                "awardDescription": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "awardDescription"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@awardList.objectAtCurrentIteration.description"}
+                    }
+                },
+
+                "setupButton": {
+                    "prototype": "montage/ui/button.reel",
+                    "properties": {
+                        "element": {"#": "setupButton"},
+                        "identifier": "setup"
+                    },
+                    "listeners": [{
+                        "type": "action",
+                        "listener": {"@": "owner"},
+                        "capture": false
+                    }]
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <section data-montage-id="awards" class="awards">
+            <h1>Scores</h1>
+            <ul data-montage-id="scoreList">
+                <li>
+                    <span data-montage-id="scorePlayer"></span> - <span data-montage-id="score"></span>
+                </li>
+            </ul>
+                
+            <h2>Round Awards</h2>
+            <ul data-montage-id="awardList">
+                <li>
+                    <h3 data-montage-id="awardTitle"></h3>
+                    <div>
+                        <span data-montage-id="awardPlayer" class="awardWinner"></span>
+                        <span data-montage-id="awardDescription" class="description"></span>
+                    </div>
+                </li>
+            </ul>
+            
+            <button data-montage-id="setupButton">Player Setup</button>
+        </section>
+    </body>
+</html>
+
+

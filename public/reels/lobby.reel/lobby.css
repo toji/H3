@@ -1,3 +1,7 @@
+.montage-invisible {
+    display: none;
+}
+
 .lobby {
     background-color: #DDD;
     border-radius: 5px;

@@ -30,8 +30,9 @@ exports.Lobby = Montage.create(Component, {
         value: null
     },
 
-    chatInput: {
-        value: null
+    // TODO: Examine why I can't use chatInput directly
+    chatValue: {
+        value: ""
     },
 
     chatForm: {
@@ -41,6 +42,13 @@ exports.Lobby = Montage.create(Component, {
     templateDidLoad: {
         value: function() {
             this.chatForm.addEventListener("submit", this, false);
+            this.gameState.addEventListener("startRound", this, false);
+        }
+    },
+
+    handleStartRound: {
+        value: function() {
+            this.gameState.currentStage = "gameboard";
         }
     },
 
@@ -50,18 +58,19 @@ exports.Lobby = Montage.create(Component, {
         }
     },
 
-    handleSubmit: {
+    handleAwardsAction: {
         value: function(event) {
-            this.gameState.sendMessage('chat', this.chatInput.value);
-            this.chatInput.value = "";
-            event.preventDefault();
-            return false;
+            this.gameState.currentStage = "awards";
         }
     },
-    
-    draw: {
-        value: function() {
-            
+
+    // Submission of chat messages
+    handleSubmit: {
+        value: function(event) {
+            this.gameState.sendMessage('chat', this.chatValue);
+            this.chatValue = "";
+            event.preventDefault();
+            return false;
         }
     }
 });

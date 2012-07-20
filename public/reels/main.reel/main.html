@@ -40,6 +40,13 @@ freely, subject to the following restrictions:
                     }
                 },
 
+                "awards": {
+                    "prototype": "reels/awards.reel",
+                    "bindings": {
+                        "gameState": {"<-": "@owner.gameState"}
+                    }
+                },
+
                 "gameboard": {
                     "prototype": "reels/gameboard.reel",
                     "bindings": {
@@ -47,22 +54,20 @@ freely, subject to the following restrictions:
                     }
                 },
 
-                "gameStageConverter": {
-                    "prototype": "reels/main.reel[GameStageConverter]"
-                },
-
                 "content": {
                     "prototype": "montage/ui/substitution.reel",
                     "properties": {
                         "element": {"#": "content"},
+                        "removalStrategy": "hide",
                         "switchComponents": {
                             "lobby": {"@": "lobby"},
-                            "gameboard": {"@": "gameboard"}
+                            "gameboard": {"@": "gameboard"},
+                            "awards": {"@": "awards"}
                         },
                         "switchValue": "lobby"
                     },
                     "bindings": {
-                        "switchValue": {"<-": "@owner.gameState.roundStarted", "converter": {"@": "gameStageConverter"}}
+                        "switchValue": {"<-": "@owner.gameState.currentStage"}
                     }
                 }
             }

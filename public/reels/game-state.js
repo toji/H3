@@ -52,6 +52,17 @@ exports.GameState = Montage.create(Montage, {
         distinct: true
     },
 
+    // Player list ranked by score
+    rankedPlayers: {
+        value: [],
+        distinct: true
+    },
+
+    awards: {
+        value: [],
+        distinct: true
+    },
+
     board: {
         value: null
     },
@@ -83,6 +94,10 @@ exports.GameState = Montage.create(Montage, {
 
     roundStarted: {
         value: false
+    },
+
+    currentStage: {
+        value: "lobby"
     },
 
     chatLog: {
@@ -254,6 +269,14 @@ exports.GameState = Montage.create(Montage, {
         value: function(data) {
             this.timeStarted = 0;
             this.timeLeft = 0;
+            this.localPlayer.ready = false;
+            this.awards = data.awards;
+
+            // Copy the player list and sort by score
+            this.rankedPlayers = this.playerList.slice(0);
+            this.rankedPlayers.sort(function(a, b) {
+                return b.score - a.score;
+            });
 
             var endRoundEvent = document.createEvent("CustomEvent");
             endRoundEvent.initCustomEvent("endRound", true, true, null);

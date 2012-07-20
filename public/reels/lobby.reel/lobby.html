@@ -124,6 +124,9 @@ freely, subject to the following restrictions:
                     "prototype": "montage/ui/input-text.reel",
                     "properties": {
                         "element": {"#": "chatInput"}
+                    },
+                    "bindings": {
+                        "value": {"<->": "@owner.chatValue"}
                     }
                 },
 
@@ -163,6 +166,30 @@ freely, subject to the following restrictions:
                     "bindings": {
                         "value": {"<-": "@chatLog.objectAtCurrentIteration.message"}
                     }
+                },
+
+                "awardsCondition": {
+                    "prototype": "montage/ui/condition.reel",
+                    "properties": {
+                        "element": {"#": "awardsCondition"},
+                        "removalStrategy": "hide"
+                    },
+                    "bindings": {
+                        "condition": {"<-": "@owner.gameState.awards.count()"}
+                    }
+                },
+
+                "awardsButton": {
+                    "prototype": "montage/ui/button.reel",
+                    "properties": {
+                        "element": {"#": "awardsButton"},
+                        "identifier": "awards"
+                    },
+                    "listeners": [{
+                        "type": "action",
+                        "listener": {"@": "owner"},
+                        "capture": false
+                    }]
                 }
             }
         </script>
@@ -207,13 +234,17 @@ freely, subject to the following restrictions:
             
             <div class="chatBox">
                 <form data-montage-id="chatForm" class="chatForm">
-                    <span>Say:</span>
+                    <span>Chat:</span>
                     <input type="text" data-montage-id="chatInput" class="chatInput"></input>
                     <button data-montage-id="chatSend" class="chatSend">Send</button>
                 </form>
                 <div data-montage-id="chatLog" class="chatLog">
                     <span data-montage-id="chatPlayer" class="chatPlayer"></span>: <span data-montage-id="chatMessage" class="chatMessage"></span><br/>
                 </div>
+            </div>
+
+            <div data-montage-id="awardsCondition">
+                <button data-montage-id="awardsButton">View Awards</button>
             </div>
         </section>
     </body>
