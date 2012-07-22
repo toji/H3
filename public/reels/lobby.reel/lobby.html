@@ -35,7 +35,8 @@ freely, subject to the following restrictions:
                         "chatForm": {"#": "chatForm"}
                     },
                     "bindings": {
-                        "localPlayerColor": {"<-": "@owner.gameState.localPlayer.color"}
+                        "localPlayerColor": {"<-": "@owner.gameState.localPlayer.color"},
+                        "localPlayerName": {"<-": "@owner.gameState.localPlayer.name"}
                     }
                 },
 
@@ -180,16 +181,6 @@ freely, subject to the following restrictions:
                     }
                 },
 
-                "playerScore": {
-                    "prototype": "montage/ui/dynamic-text.reel",
-                    "properties": {
-                        "element": {"#": "playerScore"}
-                    },
-                    "bindings": {
-                        "value": {"<-": "@playerList.objectAtCurrentIteration.score"}
-                    }
-                },
-
                 "chatInput": {
                     "prototype": "montage/ui/input-text.reel",
                     "properties": {
@@ -296,7 +287,6 @@ freely, subject to the following restrictions:
                             <input type="checkbox" data-montage-id="playerReady" disabled />
                         </div>
                         <span data-montage-id="playerName" class="name"></span>
-                        <span data-montage-id="playerScore" class="score"></span>
                     </div>
                 </div>
             </div>

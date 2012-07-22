@@ -106,6 +106,10 @@ exports.Player = Montage.create(Montage, {
                 
             if(data.hasOwnProperty('score')) {
                 this.score = data.score;
+                var lastPt = this.game.lastMousePt;
+                if(data.change && lastPt) {
+                    this.game.render.addToast(lastPt.x, lastPt.y, "+" + data.change, "score");
+                }
             }
             
             if(data.color) {

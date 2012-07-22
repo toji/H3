@@ -94,6 +94,21 @@ exports.Lobby = Montage.create(Component, {
         }
     },
 
+    _localPlayerName: {
+        value: null
+    },
+
+    localPlayerName: {
+        get: function() {
+            return this._localPlayerName;
+        },
+        set: function(value) {
+            if(value == this._localPlayerName) { return; }
+            this._localPlayerName = value;
+            this.gameState.sendMessage('sync_player', { name: value } );
+        }
+    },
+
     draw: {
         value: function() {
             // TODO: Aw HELL Naw!

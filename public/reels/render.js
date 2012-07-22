@@ -164,9 +164,9 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 animate();
             }
         }
-    },
+    }
 
-    addToast: {
+    /*addToast: {
         value: function(pt, text) {
             var totalLife = 1000;
             var life = totalLife;
@@ -182,7 +182,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 return life > 0;
             });
         }
-    }
+    }*/
 });
 
 //
@@ -190,6 +190,10 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
 //
 
 var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
+    gameboard: {
+        value: null
+    },
+
     tileContext: {
         value: null
     },
@@ -203,9 +207,10 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     },
 
     init: {
-        value: function(tileCanvas, effectCanvas) {
-            this.tileContext = tileCanvas.getContext('2d');
-            this.effectContext = effectCanvas.getContext('2d');
+        value: function(gameboard) {
+            this.gameboard = gameboard;
+            this.tileContext = gameboard.tileLayer.getContext('2d');
+            this.effectContext = gameboard.effectLayer.getContext('2d');
 
             this.emptyTile = new Image();
             this.emptyTile.src = '/img/' + Globals.theme + '/empty.png';
@@ -399,6 +404,12 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             ctx.globalAlpha = 1;
             
             ctx.restore();
+        }
+    },
+
+    addToast: {
+        value: function(x, y, text, toastClass) {
+            this.gameboard.addToast(x, y, text, toastClass);
         }
     },
 

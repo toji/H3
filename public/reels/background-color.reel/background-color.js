@@ -30,7 +30,7 @@ exports.BackgroundColor = Montage.create(Component, {
     },
 
     _backgroundColor: {
-        value: "#FFFFFF"
+        value: "rgb(255,255,255)"
     },
 
     backgroundColor: {

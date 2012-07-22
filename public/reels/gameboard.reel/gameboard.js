@@ -55,7 +55,7 @@ exports.Gameboard = Montage.create(Component, {
             this.effectLayer.width = Globals.board.width;
             this.effectLayer.height = Globals.board.height;
 
-            this.renderer = CanvasRenderer.create().init(this.tileLayer, this.effectLayer);
+            this.renderer = CanvasRenderer.create().init(this);
             this.gameState.render = this.renderer;
 
             this.gameState.addEventListener("startRound", this, false);
@@ -144,6 +144,36 @@ exports.Gameboard = Montage.create(Component, {
                 this.inputActive = false;
                 this.gameState.finishPath();
                 return false;
+            }
+        }
+    },
+
+    // Clears toasts when the transition ends
+    handleWebkitTransitionEnd: {
+        value: function(event) {
+            var parentElement = event.target.parentElement;
+            parentElement.removeChild(event.target);
+        }
+    },
+
+    addToast: {
+        value: function(x, y, text, toastClass) {
+            var toastElement = document.createElement("div");
+            toastElement.classList.add("toast");
+
+            toastElement.appendChild(document.createTextNode(text));
+            toastElement.style.left = x + "px";
+            toastElement.style.top = y + "px";
+
+            toastElement.addEventListener("webkitTransitionEnd", this, false);
+            
+            this._element.appendChild(toastElement);
+
+            if(toastClass) {
+                setTimeout(function() {
+                    toastElement.classList.add(toastClass);
+                }, 10);
+                
             }
         }
     },

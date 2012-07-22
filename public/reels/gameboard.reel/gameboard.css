@@ -1,5 +1,6 @@
 .gameboard
 {
+    margin: auto;
     position: relative;
     width: 480px;
     height: 640px;
@@ -34,4 +35,20 @@
 .gameboard .scoreboard {
     position: relative;
     z-index: 2;
+}
+
+.gameboard .toast {
+    position: absolute;
+    z-index: 3;
+    pointer-events: none;
+    margin-top: 0;
+    opacity: 1;
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.gameboard .toast.score {
+    margin-top: -100px;
+    opacity: 0;
+    -webkit-transition: margin-top 1s, opacity 0.25s 0.75s;
 }

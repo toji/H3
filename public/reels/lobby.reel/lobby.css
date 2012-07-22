@@ -3,6 +3,7 @@
 }
 
 .lobby {
+    margin: auto;
     background-color: #DDD;
     border-radius: 5px;
     border: 2px solid #AAA;
@@ -84,12 +85,10 @@
 
 .lobby .playerScore .color {
     display: inline-block;
-    width: 20px;
-    height: 20px;
     border: 1px solid #666;
     border-radius: 5px;
     margin-right: 10px;
-    padding-left: 10px;
+    padding: 5px;
     -webkit-transition: background-color 0.5s ease-in-out;
 }
 
