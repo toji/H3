@@ -386,6 +386,17 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         }
     },
 
+    // Clears toasts when the transition ends
+    // Note: Will be called when the first transition ends, so all transitions need to end around the same time.
+    handleWebkitTransitionEnd: {
+        value: function(event) {
+            var parentElement = event.target.parentElement;
+            if(parentElement) {
+                parentElement.removeChild(event.target);
+            }
+        }
+    },
+
     addToast: {
         value: function(x, y, text, toastClass) {
             var toastElement = document.createElement("div");

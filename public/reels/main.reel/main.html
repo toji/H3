@@ -24,12 +24,17 @@ freely, subject to the following restrictions:
 <html>
     <meta charset="utf-8">
     <head>
+        <link type="text/css" href="main.css" rel="stylesheet" />
         <script type="text/montage-serialization">
             {
                 "owner": {
                     "prototype": "reels/main.reel",
                     "properties": {
-                        "element": {"#": "main" }
+                        "element": {"#": "main" },
+                        "content": {"@": "content"}
+                    },
+                    "bindings": {
+                        "pendingStage": {"<-": "@owner.gameState.currentStage"}
                     }
                 },
 
@@ -67,7 +72,7 @@ freely, subject to the following restrictions:
                         "switchValue": "lobby"
                     },
                     "bindings": {
-                        "switchValue": {"<-": "@owner.gameState.currentStage"}
+                        "switchValue": {"<-": "@owner.currentStage"}
                     }
                 }
             }
@@ -75,7 +80,7 @@ freely, subject to the following restrictions:
     </head>
     <body>
         <section data-montage-id="main">
-            <div data-montage-id="content"></div>
+            <div data-montage-id="content" class="content"></div>
         </section>
     </body>
 </html>

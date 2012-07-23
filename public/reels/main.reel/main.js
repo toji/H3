@@ -27,6 +27,10 @@ var Montage = require("montage/core/core").Montage,
     Converter = require("montage/core/converter/converter").Converter;
 
 exports.Main = Montage.create(Component, {
+    content: {
+        value: null
+    },
+
     gameState: {
         value: null
     },
@@ -34,6 +38,59 @@ exports.Main = Montage.create(Component, {
     templateDidLoad: {
         value: function() {
             this.gameState = GameState.create().init();
+        }
+    },
+
+    fadeOut: {
+        value: false
+    },
+
+    _pendingStage: {
+        value: "lobby"
+    },
+
+    pendingStage: {
+        get: function() {
+            return this._pendingStage;
+        },
+        set: function(value) {
+            if(this._currentStage != value) {
+                this._pendingStage = value;
+                this.fadeOut = true;
+                this.needsDraw = true;
+            }
+            
+        }
+    },
+
+    currentStage: {
+        value: "lobby"
+    },
+
+    // Triggers when the scene is done fading out
+    handleWebkitTransitionEnd: {
+        value: function(event) {
+            if(this.fadeOut) {
+                this.fadeOut = false;
+                this.currentStage = this._pendingStage;
+                this.needsDraw = true;
+            }
+        }
+    },
+
+    prepareForDraw: {
+        value: function() {
+            this.content._element.addEventListener("webkitTransitionEnd", this, false);
+        }
+    },
+
+    draw: {
+        value: function() {
+            if(this.fadeOut) {
+                this.content._element.classList.add("fade");
+            } else {
+                this.content._element.classList.remove("fade");
+            }
         }
     }
 });
