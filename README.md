@@ -7,15 +7,19 @@ Installing the local server
 ---------------------------
 You'll need Node.js, which is easy to install with the download at [NodeJS.org](http://nodejs.org/).
 
-Once you've cloned the git repo, navigate to it on the command line and run 
+Once you've cloned the git repo, navigate to it on the command line and run:
+
+`git submodule update --init`
+
+Which will install the Montage framework that H₃ is built on. Then run:
 
 `npm install`
 
-Which should install all of the server dependencies. At that point you should be able to start the local server by running 
+Which should install all of the server dependencies. At that point you should be able to start the local server by running: 
 
 `node server`
 
-in the same directory. Now you can navigate to http://localhost:8080 in your web browser and see the game in action! Give your IP to friends to play multiplayer matches!
+In the same directory. Now you can navigate to http://localhost:8080 in your web browser and see the game in action! Give your IP to friends to play multiplayer matches!
 
 Public Server
 -------------
