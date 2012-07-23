@@ -13,6 +13,10 @@
         "socket.io": "v0.8.x",
         "express": "v2.5.x"
     },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/toji/H3.git"
+    },
     "analyze": false,
     "devDependencies": {},
     "optionalDependencies": {},
