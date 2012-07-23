@@ -1,9 +1,11 @@
 .gameboard
 {
     margin: auto;
-    position: relative;
-    width: 480px;
-    height: 640px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 .gameboard > canvas {

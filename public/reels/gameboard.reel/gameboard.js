@@ -65,18 +65,6 @@ exports.Gameboard = Montage.create(Component, {
         }
     },
 
-    handleResize: {
-        value: function() {
-            this.tileLayer.width = this.tileLayer.offsetWidth;
-            this.tileLayer.height = this.tileLayer.offsetHeight;
-
-            this.effectLayer.width = this.effectLayer.offsetWidth;
-            this.effectLayer.height = this.effectLayer.offsetHeight;
-
-            this.gameState.redrawAll();
-        }
-    },
-
     handleStartRound: {
         value: function() {
             this._lastFrameTime = this.timeStarted;
@@ -154,15 +142,28 @@ exports.Gameboard = Montage.create(Component, {
         }
     },
 
-    _lastFrameTime: {
-        value: null
+    handleResize: {
+        value: function() {
+            this.tileLayer.width = this.tileLayer.offsetWidth;
+            this.tileLayer.height = this.tileLayer.offsetHeight;
+
+            this.effectLayer.width = this.effectLayer.offsetWidth;
+            this.effectLayer.height = this.effectLayer.offsetHeight;
+
+            this.gameState.resize(this.tileLayer.width, this.tileLayer.height);
+        }
     },
 
     prepareForDraw: {
         value: function() {
             this.handleResize();
             // Listen to window resize here?
+            window.addEventListener("resize", this, false);
         }
+    },
+
+    _lastFrameTime: {
+        value: null
     },
 
     draw: {

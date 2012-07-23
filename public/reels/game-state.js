@@ -120,6 +120,13 @@ exports.GameState = Montage.create(Montage, {
         }
     },
 
+    resize: {
+        value: function(width, height) {
+            this.board.calculateTileDimensions(10, 48, width-20, height-58);
+            this.redrawAll();
+        }
+    },
+
     redrawAll: {
         value: function() {
             for(var i in this.board.tiles) {
