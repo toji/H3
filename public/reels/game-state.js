@@ -23,7 +23,7 @@
 
 var Montage = require("montage/core/core").Montage,
     Player = require("reels/player").Player,
-    Board = require("js/board").Board,
+    Board = require("reels/board").Board,
     Globals = require("reels/globals").Globals;
 
 function dist(pt0, pt1) {
@@ -135,7 +135,7 @@ exports.GameState = Montage.create(Montage, {
 
     init: {
         value: function() {
-            this.board = new Board(10, 48, Globals.board.width-20, Globals.board.height-58, Globals.theme);
+            this.board = Board.create().init(10, 48, Globals.board.width-20, Globals.board.height-58, Globals.theme);
 
             // Socket connection
             var game = this;
@@ -219,7 +219,7 @@ exports.GameState = Montage.create(Montage, {
                     break;
                 
                 case 'add_trail':
-                    player.updateTrail(this.board.unscale_point(data));
+                    player.updateTrail(this.board.unscalePoint(data));
                     this.render.drawTrail(player);
                     break;
                 
@@ -306,7 +306,7 @@ exports.GameState = Montage.create(Montage, {
             var syncPt = this.localPlayer.updateTrail(this.lastMousePt);
             
             if(syncPt) {
-                this.sendMessage('add_trail', this.board.scale_point(this.lastMousePt));
+                this.sendMessage('add_trail', this.board.scalePoint(this.lastMousePt));
             }
             
             if(this.render)
@@ -322,8 +322,8 @@ exports.GameState = Montage.create(Montage, {
                 var dy = (pt1.y - pt0.y) / d;
                 
                 for(var i = 1; i < d; ++i) {
-                    var newTile = this.board.pixel_to_tile(pt0.x+(dx*i), pt0.y+(dy*i));
-                    if(tile != newTile && newTile != -1 && this.board.compatible_tile(newTile, this.localPlayer.path)) {
+                    var newTile = this.board.pixelToTile(pt0.x+(dx*i), pt0.y+(dy*i));
+                    if(tile != newTile && newTile != -1 && this.board.compatibleTile(newTile, this.localPlayer.path)) {
                         tile = newTile;
                         this.localPlayer.path.push(tile);
                         this.render.drawHighlight(tile, this.localPlayer);
@@ -333,8 +333,8 @@ exports.GameState = Montage.create(Montage, {
             }
             
             // Make sure to include the final point
-            tile = this.board.pixel_to_tile(x, y);
-            if(tile != -1 && this.board.compatible_tile(tile, this.localPlayer.path)) {
+            tile = this.board.pixelToTile(x, y);
+            if(tile != -1 && this.board.compatibleTile(tile, this.localPlayer.path)) {
                 this.localPlayer.path.push(tile);
                 this.render.drawHighlight(tile, this.localPlayer);
                 this.sendMessage('add_tile', tile);

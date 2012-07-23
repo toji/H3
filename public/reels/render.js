@@ -125,7 +125,7 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 });
                 
                 setTimeout(function() {
-                    var adjacent = that.board.get_adjacent_tiles(tile);
+                    var adjacent = that.board.getAdjacentTiles(tile);
                     for(var i in adjacent)
                         animate(adjacent[i]);
                 }, 50);
@@ -234,15 +234,15 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             else
                 ctx = this.tileContext;
             
-            if(type < 0 || type >= this.board.tile_types.length)
+            if(type < 0 || type >= this.board.tileTypes.length)
                 return;
                 
             ctx.save();
             
             try {
-                var img = this.board.tile_types[type].image;
-                var pt = this.board.tile_to_pixel(tile);
-                var ts = this.board.tile_size;
+                var img = this.board.tileTypes[type].image;
+                var pt = this.board.tileToPixel(tile);
+                var ts = this.board.tileSize;
 
                 var sizeX = (ts.b - ts.padding);
                 var sizeY = (ts.a - ts.padding);
@@ -270,13 +270,10 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
     clearTile: {
         value: function(tile) {
-            var pt = this.board.tile_to_pixel(tile);
-            var tc = this.board.tile_coords;
+            var pt = this.board.tileToPixel(tile);
+            var tc = this.board.tileCoords;
             var ctx = this.tileContext;
-
-            var pt = this.board.tile_to_pixel(tile);
-            var ts = this.board.tile_size;
-            var tc = this.board.tile_coords;
+            var ts = this.board.tileSize;
             
             this.drawPadding(ctx, pt, ts.padding);
             
@@ -293,7 +290,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
     drawPadding: {
         value: function(ctx, pt, width) {
-            var tc = this.board.tile_coords;
+            var tc = this.board.tileCoords;
             
             ctx.save();
 
@@ -321,11 +318,11 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     // draw a player highlight around a tile (passed by id)
     drawHighlight: {
         value: function(tile, player, ring) {
-            var pt = this.board.tile_to_pixel(tile);
+            var pt = this.board.tileToPixel(tile);
             
             var ctx = this.effectContext;
-            var tc = this.board.tile_coords;
-            var ts = this.board.tile_size;
+            var tc = this.board.tileCoords;
+            var ts = this.board.tileSize;
             if(!ring)
                 ring = 1;
             
@@ -336,7 +333,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             var scale = 1.0 - (0.2 * (ring-1));
             if(ring != 1) {
                 ctx.translate(-ts.b * 0.5 * scale, -ts.a * 0.5 * scale);
-                ctx.scale(scale, scale)
+                ctx.scale(scale, scale);
                 ctx.translate(ts.b * 0.5 * (1/scale), ts.a * 0.5 * (1/scale));
             }
             
