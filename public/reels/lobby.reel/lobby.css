@@ -77,13 +77,16 @@
     border: 1px solid #666;
 }
 
-.lobby .colorOption.checked, .playerScore .color.checked {
-    background-image: url("/img/check.png");
-    background-repeat: no-repeat;
-    background-position: center center;
+.lobby .player {
+    display: inline-block;
+    width: 48%;
+    margin-bottom: 5px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
-.lobby .playerScore .color {
+.lobby .player .color {
     display: inline-block;
     border: 1px solid #666;
     border-radius: 5px;

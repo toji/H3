@@ -176,10 +176,6 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         value: null
     },
 
-    toastLayer: {
-        value: null
-    },
-
     tileContext: {
         value: null
     },
@@ -195,7 +191,6 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     init: {
         value: function(gameboard) {
             this.gameboard = gameboard;
-            this.toastLayer = gameboard._element;
             this.tileContext = gameboard.tileLayer.getContext('2d');
             this.effectContext = gameboard.effectLayer.getContext('2d');
 
