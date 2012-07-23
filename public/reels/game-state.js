@@ -274,7 +274,7 @@ exports.GameState = Montage.create(Montage, {
 
             // Copy the player list and sort by score
             this.rankedPlayers = this.playerList.slice(0);
-            this.rankedPlayers.sort(function(a, b) {
+            var a = this.rankedPlayers.sort(function(a, b) {
                 return b.score - a.score;
             });
 

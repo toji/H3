@@ -165,24 +165,6 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
             }
         }
     }
-
-    /*addToast: {
-        value: function(pt, text) {
-            var totalLife = 1000;
-            var life = totalLife;
-            var that = this;
-            
-            this.frameEndCallbacks.push(function(frameTime) {
-                var mod = jQuery.easing.easeOutSine(null, totalLife - life, 0, 1, totalLife);
-                
-                that.draw_text(text, pt.x, pt.y - (100*mod), 1.0 - mod);
-                
-                life -= frameTime;
-                
-                return life > 0;
-            });
-        }
-    }*/
 });
 
 //
@@ -191,6 +173,10 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
 
 var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     gameboard: {
+        value: null
+    },
+
+    toastLayer: {
         value: null
     },
 
@@ -209,6 +195,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     init: {
         value: function(gameboard) {
             this.gameboard = gameboard;
+            this.toastLayer = gameboard._element;
             this.tileContext = gameboard.tileLayer.getContext('2d');
             this.effectContext = gameboard.effectLayer.getContext('2d');
 
@@ -406,7 +393,23 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
     addToast: {
         value: function(x, y, text, toastClass) {
-            this.gameboard.addToast(x, y, text, toastClass);
+            var toastElement = document.createElement("div");
+            toastElement.classList.add("toast");
+
+            toastElement.appendChild(document.createTextNode(text));
+            toastElement.style.left = x + "px";
+            toastElement.style.top = y + "px";
+
+            toastElement.addEventListener("webkitTransitionEnd", this, false);
+            
+            this.gameboard._element.appendChild(toastElement);
+
+            if(toastClass) {
+                setTimeout(function() {
+                    toastElement.classList.add(toastClass);
+                }, 10);
+                
+            }
         }
     },
 

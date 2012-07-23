@@ -159,28 +159,6 @@ exports.Gameboard = Montage.create(Component, {
         }
     },
 
-    addToast: {
-        value: function(x, y, text, toastClass) {
-            var toastElement = document.createElement("div");
-            toastElement.classList.add("toast");
-
-            toastElement.appendChild(document.createTextNode(text));
-            toastElement.style.left = x + "px";
-            toastElement.style.top = y + "px";
-
-            toastElement.addEventListener("webkitTransitionEnd", this, false);
-            
-            this._element.appendChild(toastElement);
-
-            if(toastClass) {
-                setTimeout(function() {
-                    toastElement.classList.add(toastClass);
-                }, 10);
-                
-            }
-        }
-    },
-
     _lastFrameTime: {
         value: null
     },
