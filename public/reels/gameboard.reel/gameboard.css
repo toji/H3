@@ -32,11 +32,13 @@
     position: relative;
     z-index: 3;
     text-align: center;
+    pointer-events: none;
 }
 
 .gameboard .scoreboard {
     position: relative;
     z-index: 4;
+    pointer-events: none;
 }
 
 .gameboard .toast {

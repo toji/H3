@@ -117,7 +117,7 @@ exports.Gameboard = Montage.create(Component, {
                 var x = event.touches[0].pageX - this._element.offsetLeft;
                 var y = event.touches[0].pageY - this._element.offsetTop;
                 
-                this.gameState.addPoint(x, y, first);
+                this.gameState.addPoint(x * window.devicePixelRatio, y * window.devicePixelRatio, first);
 
                 event.preventDefault();
                 return false;
@@ -137,11 +137,11 @@ exports.Gameboard = Montage.create(Component, {
 
     handleResize: {
         value: function() {
-            this.tileLayer.width = this.tileLayer.offsetWidth;
-            this.tileLayer.height = this.tileLayer.offsetHeight;
+            this.tileLayer.width = this.tileLayer.offsetWidth * window.devicePixelRatio;
+            this.tileLayer.height = this.tileLayer.offsetHeight * window.devicePixelRatio;
 
-            this.effectLayer.width = this.effectLayer.offsetWidth;
-            this.effectLayer.height = this.effectLayer.offsetHeight;
+            this.effectLayer.width = this.effectLayer.offsetWidth * window.devicePixelRatio;
+            this.effectLayer.height = this.effectLayer.offsetHeight * window.devicePixelRatio;
 
             this.gameState.resize(this.tileLayer.width, this.tileLayer.height);
         }

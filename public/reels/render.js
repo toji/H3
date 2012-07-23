@@ -413,8 +413,8 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             toastElement.classList.add("toast");
 
             toastElement.appendChild(document.createTextNode(text));
-            toastElement.style.left = x + "px";
-            toastElement.style.top = y + "px";
+            toastElement.style.left = (x / window.devicePixelRatio) + "px";
+            toastElement.style.top = (y / window.devicePixelRatio) + "px";
 
             toastElement.addEventListener("webkitTransitionEnd", this, false);
             
