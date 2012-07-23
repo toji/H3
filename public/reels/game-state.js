@@ -451,7 +451,7 @@ exports.GameState = Montage.create(Montage, {
     redrawBoard: {
         value: function(frameTime) {
             if(!this.render) { return; }
-            this.render.clear();
+            this.render.clearEffects();
     
             this.render.startFrame(frameTime);
             

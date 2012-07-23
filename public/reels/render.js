@@ -206,9 +206,13 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         }
     },
 
-    clear: {
+    clearEffects: {
         value: function() {
-            // clear the entire board
+            // clear the effects layer
+            /*var o = this.board.offset;
+            this.effectContext.clearRect(o.x, o.y, o.width, o.height);*/
+
+            // This is probably hurting us performance-wise. Would be nice to limit the area that needed clearing
             this.effectContext.clearRect(0, 0, this.effectCanvas.width, this.effectCanvas.height);
         }
     },

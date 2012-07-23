@@ -49,19 +49,12 @@ exports.Gameboard = Montage.create(Component, {
 
     templateDidLoad: {
         value: function() {
-            this.renderer = CanvasRenderer.create().init(this);
-            this.gameState.render = this.renderer;
+            
 
             this.gameState.addEventListener("startRound", this, false);
             this.gameState.addEventListener("endRound", this, false);
 
-            this.effectLayer.addEventListener("mousedown", this, false);
-            this.effectLayer.addEventListener("mousemove", this, false);
-            document.addEventListener("mouseup", this, false);
-
-            this.effectLayer.addEventListener("touchstart", this, false);
-            this.effectLayer.addEventListener("touchmove", this, false);
-            document.addEventListener("touchend", this, false);
+            
         }
     },
 
@@ -154,11 +147,36 @@ exports.Gameboard = Montage.create(Component, {
         }
     },
 
+    addCanvas: {
+        value: function(name) {
+            //return document.getElementById(name);
+
+            var canvasEl = document.createElement("canvas");
+            canvasEl.classList.add(name);
+            this._element.appendChild(canvasEl);
+            return canvasEl;
+        }
+    },
+
     prepareForDraw: {
         value: function() {
+            this.tileLayer = this.addCanvas("tileLayer");
+            this.effectLayer = this.addCanvas("effectLayer");
+
+            this.renderer = CanvasRenderer.create().init(this);
+            this.gameState.render = this.renderer;
+
             this.handleResize();
             // Listen to window resize here?
             window.addEventListener("resize", this, false);
+
+            this.effectLayer.addEventListener("mousedown", this, false);
+            this.effectLayer.addEventListener("mousemove", this, false);
+            document.addEventListener("mouseup", this, false);
+
+            this.effectLayer.addEventListener("touchstart", this, false);
+            this.effectLayer.addEventListener("touchmove", this, false);
+            document.addEventListener("touchend", this, false);
         }
     },
 
