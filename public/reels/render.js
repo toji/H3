@@ -180,6 +180,10 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         value: null
     },
 
+    effectCanvas: {
+        value: null
+    },
+
     effectContext: {
         value: null
     },
@@ -191,6 +195,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     init: {
         value: function(gameboard) {
             this.gameboard = gameboard;
+            this.effectCanvas = gameboard.effectLayer;
             this.tileContext = gameboard.tileLayer.getContext('2d');
             this.effectContext = gameboard.effectLayer.getContext('2d');
 
@@ -204,7 +209,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
     clear: {
         value: function() {
             // clear the entire board
-            this.effectContext.clearRect(0, 0, Globals.board.width, Globals.board.height);
+            this.effectContext.clearRect(0, 0, this.effectCanvas.width, this.effectCanvas.height);
         }
     },
 
@@ -236,6 +241,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
                 offsetY -= ((sizeY * scale) - sizeY) * 0.5;
                 
                 ctx.globalAlpha = opacity >= 0 ? opacity : 0;
+                //console.log("drawImage(" + img.src + ", " + offsetY + ", " + offsetY + "," + (sizeX * scale) + ", " + (sizeY * scale));
                 ctx.drawImage(img, offsetX, offsetY, sizeX * scale, sizeY * scale);
                 
                 if(!effect) {
@@ -243,7 +249,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
                 }
                 
             } catch(ex) {
-                //console.log('Draw Tile failed: ' + ex);
+                console.log('Draw Tile failed: ' + ex);
             }
             
             ctx.restore();

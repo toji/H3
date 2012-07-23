@@ -49,12 +49,6 @@ exports.Gameboard = Montage.create(Component, {
 
     templateDidLoad: {
         value: function() {
-            this.tileLayer.width = Globals.board.width;
-            this.tileLayer.height = Globals.board.height;
-
-            this.effectLayer.width = Globals.board.width;
-            this.effectLayer.height = Globals.board.height;
-
             this.renderer = CanvasRenderer.create().init(this);
             this.gameState.render = this.renderer;
 
@@ -68,6 +62,18 @@ exports.Gameboard = Montage.create(Component, {
             this.effectLayer.addEventListener("touchstart", this, false);
             this.effectLayer.addEventListener("touchmove", this, false);
             document.addEventListener("touchend", this, false);
+        }
+    },
+
+    handleResize: {
+        value: function() {
+            this.tileLayer.width = this.tileLayer.offsetWidth;
+            this.tileLayer.height = this.tileLayer.offsetHeight;
+
+            this.effectLayer.width = this.effectLayer.offsetWidth;
+            this.effectLayer.height = this.effectLayer.offsetHeight;
+
+            this.gameState.redrawAll();
         }
     },
 
@@ -150,6 +156,13 @@ exports.Gameboard = Montage.create(Component, {
 
     _lastFrameTime: {
         value: null
+    },
+
+    prepareForDraw: {
+        value: function() {
+            this.handleResize();
+            // Listen to window resize here?
+        }
     },
 
     draw: {

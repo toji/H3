@@ -117,10 +117,14 @@ exports.GameState = Montage.create(Montage, {
         set: function(value) {
             this._render = value;
             this._render.bindGame(this);
+        }
+    },
 
-            var i;
-            for(i in this.board.tiles)
+    redrawAll: {
+        value: function() {
+            for(var i in this.board.tiles) {
                 this._render.drawTile(i);
+            }
         }
     },
 

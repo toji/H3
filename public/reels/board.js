@@ -59,6 +59,10 @@ exports.Board = Montage.create(Montage, {
         distinct: true
     },
 
+    offset: {
+        value: null
+    },
+
     tileTypes: {
         value: [
             new TileType('red.png'),
