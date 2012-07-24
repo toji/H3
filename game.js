@@ -1,12 +1,12 @@
-var board = require('./public/js/board');
+var board = require('./board');
 
 //
 // Game
 //
 
-var Game = function(private_gameid) {
+var Game = function(private_game) {
     this.id = Game.new_id();
-    this.private_gameid = private_gameid;
+    this.private_game = !!private_game;
     this.player_limit = 4;
     this.time_limit = 60;
     this.tile_recharge = 2.0;
@@ -18,37 +18,37 @@ var Game = function(private_gameid) {
     
     this.players = [];
     this.trails = [];
-}
+};
 
 Game.prototype.data_object = function() {
-    var that = this;
     var data = {
-        id: that.id,
-        player_limit: that.player_limit,
-        time_limit: that.time_limit,
-        tile_recharge: that.tile_recharge,
-        tiles: that.tiles,
-        board: that.board.data_object(),
-        players: []
+        id: this.id,
+        player_limit: this.player_limit,
+        time_limit: this.time_limit,
+        tile_recharge: this.tile_recharge,
+        tiles: this.tiles,
+        board: this.board.data_object(),
+        players: [],
+        private_game: this.private_game
     };
     for(var i in this.players) {
         data.players.push(this.players[i].data_object());
     }
     return data;
-}
+};
 
 Game.last_id = 0;
 
 Game.new_id = function() {
     return ++Game.last_id;
-}
+};
 
 Game.prototype.add_player = function(player) {
     player.send('player_id', null, player);
     this.broadcast('sync_player', player.data_object(), player); // Tell existing players about the new one
     this.players.push(player);
     player.send('sync_game', this.data_object()); // Tell the new player about the game state
-}
+};
 
 Game.prototype.remove_player = function(player) {
     var i = this.players.indexOf(player);
@@ -56,31 +56,31 @@ Game.prototype.remove_player = function(player) {
     this.broadcast('remove_player', null, player);
     
     // If everyone has left the game, stop the round in progress and remove this game
-    if(this.players.length == 0) {
-        if(this.round_timeout) 
+    if(this.players.length === 0) {
+        if(this.round_timeout)
             clearTimeout(this.round_timeout);
             Game.remove_game(this);
     } else {
         // Check to see if all remaining players are ready
         this.ready_changed();
     }
-}
+};
 
 // Broadcast a message to all players
 Game.prototype.broadcast = function(type, data, player) {
-    for(p in this.players) {
+    for(var p in this.players) {
         this.players[p].send(type, data, player);
     }
-}
+};
 
 // Broadcast a message to everyone but the sending player
 Game.prototype.broadcast_others = function(type, data, player) {
-    for(p in this.players) {
+    for(var p in this.players) {
         var send_player = this.players[p];
         if(player != send_player)
             send_player.send(type, data, player);
     }
-}
+};
 
 Game.prototype.message = function(type, data, player) {
     switch(type) {
@@ -115,15 +115,14 @@ Game.prototype.message = function(type, data, player) {
             console.log('Unknown message type: ' + type);
             break;
     }
-}
+};
 
-Game.prototype.reset = function()
-{
+Game.prototype.reset = function() {
     this.board.randomize();
     
     for(var i in this.players)
         this.players[i].reset();
-}
+};
 
 Game.prototype.ready_changed = function() {
     clearTimeout(this.ready_timeout);
@@ -132,7 +131,7 @@ Game.prototype.ready_changed = function() {
     {
         var player = this.players[i];
         
-        if(!player.ready) 
+        if(!player.ready)
             return;
     }
     
@@ -149,17 +148,17 @@ Game.prototype.ready_changed = function() {
         for(var i in this.players)
         {
             var player = this.players[i];
-            if(!player.ready) 
+            if(!player.ready)
                 return;
         }
         
         // Great! Start the round!
         that.start_round();
     }, 3000);
-}
+};
 
 Game.prototype.start_round = function() {
-    if(!this.private_gameid)
+    if(!this.private_game)
         Game.close_game(this);
 
     clearTimeout(this.round_timeout);
@@ -186,7 +185,7 @@ Game.prototype.start_round = function() {
         
         //clearInterval(resync_interval);
         
-        var stats = that.get_round_stats()
+        var stats = that.get_round_stats();
         that.broadcast('end_round', stats);
         
         var winner = that.get_winner();
@@ -195,7 +194,7 @@ Game.prototype.start_round = function() {
         // TODO: Tally scores, give awards
         
     }, this.time_limit * 1000);
-}
+};
 
 Game.prototype.get_winner = function() {
     var winner = this.players[0];
@@ -205,7 +204,7 @@ Game.prototype.get_winner = function() {
     }
     
     return winner;
-}
+};
 
 // Calculates the value of a players path
 Game.prototype.path_value = function(path) {
@@ -225,7 +224,7 @@ Game.prototype.path_value = function(path) {
     }
         
     return value * multiplier;
-}
+};
 
 Game.prototype.merge_paths = function(path, path2) {
     for(var i in path2) {
@@ -233,7 +232,7 @@ Game.prototype.merge_paths = function(path, path2) {
             path.push(path2[i]);
         }
     }
-}
+};
 
 Game.prototype.claim = function(player) {
         if(player.path.length < 2 || !this.round_started) {
@@ -277,7 +276,7 @@ Game.prototype.claim = function(player) {
         player.score += score;
         this.broadcast('sync_player', {'score': player.score, 'change': score, 'path': []}, player);
         
-}
+};
 
 Game.prototype.cycle_tiles = function(path, last_tile, player) {
     // Tell everyone the tiles are cleared
@@ -288,20 +287,17 @@ Game.prototype.cycle_tiles = function(path, last_tile, player) {
         // Tell everyone about the new tiles
         that.broadcast('push_tiles', new_tiles);
     });
-}
+};
 
-function set_award(awards, id, player, name, description) 
-{
+function set_award(awards, id, player, name, description) {
     awards[id] = {name: name, player: player.name, description: description};
 }
 
-Game.prototype.find_largest = function(attrib, callback)
-{
+Game.prototype.find_largest = function(attrib, callback) {
     var value = 0;
     var top_player = null;
     
-    for(var i in this.players) 
-    {
+    for(var i in this.players) {
         var player = this.players[i];
         
         if(value < player[attrib]) {
@@ -312,106 +308,104 @@ Game.prototype.find_largest = function(attrib, callback)
     
     if(top_player)
         callback(top_player);
-}
+};
 
-Game.prototype.get_round_stats = function() 
-{
+Game.prototype.get_round_stats = function() {
     var winner = this.get_winner();
     
     var awards = {};
     
-    for(var i in this.players) 
-    {
+    for(var i in this.players) {
         var player = this.players[i];
         
-        if(player.score == 0)
-            set_award(awards, 'noscore', player, 
+        if(player.score === 0)
+            set_award(awards, 'noscore', player,
                 "Sombody Check his Pulse!", "didn't score at all!");
                 
-        if(player.sets_denied == 0 && this.players.length > 1)
-            set_award(awards, 'nodeny', player, 
+        if(player.sets_denied === 0 && this.players.length > 1)
+            set_award(awards, 'nodeny', player,
                 "Can't touch this", "didn't have any sets stolen from them");
                 
-        if(player.sets_stolen == 0 && this.players.length > 1)
-            set_award(awards, 'nosteal', player, 
+        if(player.sets_stolen === 0 && this.players.length > 1)
+            set_award(awards, 'nosteal', player,
                 "Do unto others...", "didn't steal any sets from other players");
         
         if(player.score == 666 || player.score == 6666 || player.score == 66666)
-            set_award(awards, 'evilscore', player, 
+            set_award(awards, 'evilscore', player,
                 "Hell of a round", "scored a rather devilish amount");
                 
         if(player.score == 1337)
-            set_award(awards, 'l33tsc0r3', player, 
+            set_award(awards, 'l33tsc0r3', player,
                 "5\/\/33t!!", "had an elite round");
                 
         if(player.points_stolen > player.score - player.points_stolen)
-            set_award(awards, 'moresteal', player, 
+            set_award(awards, 'moresteal', player,
                 "I feed on your pain", "stole more points than they scored");
         
         if(player.largest_set > 0 && player.largest_set < 5)
-            set_award(awards, 'safe', player, 
+            set_award(awards, 'safe', player,
                 "Playing it safe", "never made a set larger than " + player.largest_set + " tiles");
         
         if(player.smallest_set > 5)
-            set_award(awards, 'risky', player, 
+            set_award(awards, 'risky', player,
                 "Bigger fish to fry", "never made a set smaller than " + player.smallest_set + " tiles");
         
         if(player.name.toLowerCase() == "daddybug" || player.name.toLowerCase() == "duncan" || player.name.toLowerCase() == "redeemer")
-            set_award(awards, 'duncan', player, 
+            set_award(awards, 'duncan', player,
                 "Duncan, No!", "was playing, so something must have broken");
     }
     
     this.find_largest('largest_set', function(player) {
         if(player.largest_set < 10)
             return;
-        set_award(awards, 'largest_set', player, 
+        set_award(awards, 'largest_set', player,
             "Why didn't anyone stop him?", "claimed a set with " + player.largest_set + " tiles");
     });
     
     this.find_largest('points_stolen', function(player) {
-        set_award(awards, 'points_stolen', player, 
+        set_award(awards, 'points_stolen', player,
             "Theif!", "denied other players of " + player.points_stolen + " points");
     });
     
     this.find_largest('largest_steal', function(player) {
-        set_award(awards, 'largest_steal', player, 
+        set_award(awards, 'largest_steal', player,
             "No tile for you!", "stole a set worth " + player.largest_steal + " points from " + player.largest_steal_player.name);
     });
     
     this.find_largest('tiles_claimed', function(player) {
-        set_award(awards, 'tiles_claimed', player, 
+        set_award(awards, 'tiles_claimed', player,
             "Mine!", "claimed " + player.tiles_claimed + " tiles");
     });
     
     this.find_largest('sets_claimed', function(player) {
-        set_award(awards, 'sets_claimed', player, 
+        set_award(awards, 'sets_claimed', player,
             "Obsessive Clicker", "claimed " + player.sets_claimed + " sets");
     });
     
     this.find_largest('largest_set_denied', function(player) {
-        set_award(awards, 'largest_set_denied', player, 
+        set_award(awards, 'largest_set_denied', player,
             "The one that got away", "was denied a set worth " + player.largest_set_denied + " points by " + player.largest_set_denied_player.name);
     });
     
     this.find_largest('points_denied', function(player) {
-        set_award(awards, 'points_denied', player, 
+        set_award(awards, 'points_denied', player,
             "Slipping through your fingers", "was denied " + player.points_denied + " points");
     });
     
     this.find_largest('sets_denied', function(player) {
-        set_award(awards, 'sets_denied', player, 
+        set_award(awards, 'sets_denied', player,
             "Whipping boy", "had " + player.sets_denied + " sets stolen from them");
     });
     
     // Push the awards into an array that can be shuffled and sliced
-    awardArray = []
+    awardArray = [];
     for(var award in awards)
         awardArray.push(awards[award]);
     
     function shuffle(v) {
-        for(var j, x, i = v.length; i; j = parseInt(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
+        for(var j, x, i = v.length; i; j = Math.floor(Math.random() * i), x = v[--i], v[i] = v[j], v[j] = x);
         return v;
-    };
+    }
     
     awardArray = shuffle(awardArray);
     
@@ -419,24 +413,30 @@ Game.prototype.get_round_stats = function()
         winner: {
             name: winner.name,
             id: winner.id,
-            score: winner.score,
+            score: winner.score
         },
-        awards: awardArray.slice(0,6),
+        awards: awardArray.slice(0,6)
     };
-}
+};
 
 Game.private_games = {};
 Game.open_public_games = [];
 
-Game.find_game = function(gameid) 
-{
+Game.find_game = function(gameid) {
+    var game;
     if(gameid == -1) {
         // Practice game. Always create a new one.
         return new Game();
     }
+    else if(gameid == -2) {
+        // New Private game
+        game = new Game(true);
+        Game.private_games[game.id] = game;
+        return game;
+    }
     else if(gameid) {
-        // Private game. Join or create it.
-        var game = Game.private_games[gameid];
+        // Private game. Join or create.
+        game = Game.private_games[gameid];
         if(!game) {
             game = new Game(gameid);
             Game.private_games[gameid] = game;
@@ -445,39 +445,33 @@ Game.find_game = function(gameid)
     }
     else {
         // Public game, find one with an open spot
-        // Later on, do skill based matchmaking
         for(var i in Game.open_public_games) {
-            var game = Game.open_public_games[i];
+            game = Game.open_public_games[i];
             if(game.players.length < game.player_limit) {
                 return game;
             }
         }
         
-        var game = new Game();
+        game = new Game();
         Game.open_public_games.push(game);
 
         return game;
     }
-}
+};
 
-Game.close_game = function(game)
-{
+Game.close_game = function(game) {
     for(var i in Game.open_public_games) {
         if(game == Game.open_public_games[i])
             delete Game.open_public_games[i];
     }
-}
+};
 
-Game.remove_game = function(game) 
-{
-    if(game.private_gameid == -1) {
-        // Just delete practice games
-    }
-    else if(game.private_gameid) {
+Game.remove_game = function(game) {
+    if(game.private_game) {
         // Remove from private game
-        delete Game.private_games[game.private_gameid];
-    }
-    else {
+        if(Game.private_games.hasOwnProperty(game.id))
+            delete Game.private_games[game.id];
+    } else {
         for(var i in Game.open_public_games) {
             if(game == Game.open_public_games[i])
                 delete Game.open_public_games[i];
@@ -485,6 +479,6 @@ Game.remove_game = function(game)
     }
     
     delete game;
-}
+};
 
 exports.Game = Game;

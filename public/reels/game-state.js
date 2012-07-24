@@ -52,6 +52,10 @@ exports.GameState = Montage.create(Montage, {
         distinct: true
     },
 
+    privateGame: {
+        value: false
+    },
+
     // Player list ranked by score
     rankedPlayers: {
         value: [],
@@ -150,25 +154,34 @@ exports.GameState = Montage.create(Montage, {
 
             // Socket connection
             var game = this;
-            
+            var joinGameId = this.getQueryVariable("game");
             this.socket = io.connect();
             this.socket.on('connect', function() {
-                // Try to get locally stored name?
-                var playerName = null; //jQuery.cookie('player_name');
-                if(playerName !== null) {
-                    this.sendMessage('sync_player', {
-                        name: playerName
-                    } );
+                if(joinGameId) {
+                    try {
+                        parseInt(joinGameId, 10);
+                        game.joinGame(joinGameId);
+                    } catch(ex) {
+                        // Failed to join, probably a non-numeric gameId
+                    }
+                    
                 }
             });
             this.socket.on('message', function(packet){
                 var data = JSON.parse(packet);
-                /*console.log(data.type + ', ' + data.player + ': ');
-                console.log(data.data);*/
                 game.onMessage(data.type, data.data, data.player);
             });
 
             return this;
+        }
+    },
+
+    joinGame: {
+        value: function(gameId) {
+            this.sendMessage("join_game", gameId);
+            if(this.currentStage == "splash") {
+                this.currentStage = "lobby";
+            }
         }
     },
 
@@ -394,6 +407,10 @@ exports.GameState = Montage.create(Montage, {
             if(data.time_limit) {
                 this.timeLimit = data.time_limit;
             }
+
+            if(data.hasOwnProperty("private_game")) {
+                this.privateGame = data.private_game;
+            }
         }
     },
 
@@ -502,6 +519,20 @@ exports.GameState = Montage.create(Montage, {
             for(i in player.path) {
                 this.render.drawHighlight(player.path[i], player, 1);
             }
+        }
+    },
+
+    getQueryVariable: {
+        value: function(name) {
+            var query = window.location.search.substring(1);
+            var vars = query.split("&");
+            for (var i = 0; i < vars.length; i++) {
+                var pair = vars[i].split("=");
+                if (pair[0] == name) {
+                    return unescape(pair[1]);
+                }
+            }
+            return null;
         }
     }
 });

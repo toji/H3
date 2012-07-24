@@ -31,13 +31,19 @@ exports.Splash = Montage.create(Component, {
 
     handleQuickGameAction: {
         value: function() {
-            this.gameState.currentStage = "lobby";
+            this.gameState.joinGame(0); // Join a random game
+        }
+    },
+
+    handlePracticeGameAction: {
+        value: function() {
+            this.gameState.joinGame(-1); // Start a practice game (no other players allowed to join)
         }
     },
 
     handleFriendGameAction: {
         value: function() {
-            this.gameState.currentStage = "lobby";
+            this.gameState.joinGame(-2); // Start a private game
         }
     }
 });
