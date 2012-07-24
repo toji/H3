@@ -341,7 +341,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
             ctx.closePath();
             
             ctx.strokeStyle = player.cssColor;
-            ctx.lineWidth = Globals.highlightWidth * (1/scale);
+            ctx.lineWidth = Globals.highlightWidth * window.devicePixelRatio * (1/scale) ;
             ctx.stroke();
             
             ctx.restore();
@@ -373,7 +373,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
                 ctx.lineTo(pt.x, pt.y);
                 
                 //ctx.globalAlpha = pt.life / global.trailLife;
-                ctx.lineWidth = Globals.trailWidth * mod;
+                ctx.lineWidth = Globals.trailWidth * window.devicePixelRatio * mod;
                 ctx.stroke();
                 
                 ctx.beginPath();
@@ -384,7 +384,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
                 ctx.lineTo(lastPt.x, lastPt.y);
                 
                 ctx.globalAlpha = 1.0;
-                ctx.lineWidth = Globals.trailWidth;
+                ctx.lineWidth = Globals.trailWidth * window.devicePixelRatio;
                 ctx.stroke();
             }
             
