@@ -28,5 +28,5 @@ exports.Globals = {
     maxTrailLength: 20,
     trailLife: 250,
     tileSize: 16,
-    theme: 'emboss'
+    theme: 'ninja'
 };

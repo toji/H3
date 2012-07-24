@@ -10,7 +10,7 @@ var global = {
     max_trail_length: 20,
     trail_life: 250,
     tile_size: 16,
-    theme: 'emboss'
+    theme: 'ninja'
 };
 
 function dist(pt0, pt1) 

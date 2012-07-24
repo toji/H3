@@ -17,7 +17,7 @@
 }
 
 .gameboard .tileLayer {
-    background-color: #AAA;
+    background-color: #f9fad4;
     border-radius: 5px;
     cursor: pointer !important;
     z-index: 1;

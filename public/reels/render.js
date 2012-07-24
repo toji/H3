@@ -319,7 +319,7 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
 
             ctx.closePath();
             
-            ctx.strokeStyle = '#AAA';
+            ctx.strokeStyle = 'f2cb89';
             ctx.lineWidth = width;
             ctx.stroke();
             
