@@ -3,8 +3,8 @@
     background-color: #DDD;
     border-radius: 5px;
     border: 2px solid #AAA;
-    height: 616px;
-    width: 456px;
+    width: auto;
+    max-width: 456px;
     padding: 10px;
     position: relative;
 }
