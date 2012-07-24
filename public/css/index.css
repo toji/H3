@@ -11,7 +11,7 @@ html, body {
 body {
     color: #333;
     font-family: "Trebuchet MS";
-    background-color: hsl(0,0%,96%);
+    background-color: black;
 }
 
 #center-column {

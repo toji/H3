@@ -1,24 +1,56 @@
 .splash {
     position: absolute;
-    width: 100%;
-    height: 100%;
-
+    width: 768px;
+    height: 928px;
+    left: 50%;
+    top: 50%;
+    margin-left: -384px;
+    margin-top: -464px;
     background-image: url("/img/ninja-bee-splash.jpg");
     background-size: auto 100%;
     background-position: center center;
-    background-repeat:no-repeat;
+    background-repeat: no-repeat;
 }
 
 .splash .splashButtons {
     position: absolute;
-    bottom: 30px;
+    bottom: 140px;
     left: 0;
-    right: 0;
-    text-align: center;
-    
+    right: 0;    
 }
 
 .splash .quickGame, .splash .friendGame {
-    margin: 10px;
-    font-size: 1.5em;
+    position: absolute;
+    display: block;
+    line-height: 80px;
+    width: 265px;
+    height: 80px;
+    padding: 0;
+    margin: 0;
+    border-radius: 100px;
+    font-size: 25px;
+    border: none;
+    color: white;
+    -webkit-box-shadow: 0 0 0 10px rgba(255,255,255,.5), 0 5px 25px rgba(0,0,0,.5), inset 0 0 10px rgba(0,0,0,.5);
+    box-sizing: content-box;
+}
+
+.splash .quickGame {
+    right: 50%;
+    margin-right: 25px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#22fa75), to(#047446));
+}
+
+.splash .quickGame:active {
+    background: -webkit-gradient(linear, left top, left bottom, from(#047446), to(#22fa75));
+}
+
+.splash .friendGame {
+    left: 50%;
+    margin-left: 25px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#ff2977), to(#97132b));
+}
+
+.splash .friendGame:active {
+    background: -webkit-gradient(linear, left top, left bottom, from(#97132b), to(#ff2977));
 }
