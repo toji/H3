@@ -24,10 +24,20 @@
 var Montage = require("montage/core/core").Montage,
     Component = require("montage/ui/component").Component;
 
-exports.MainMenu = Montage.create(Component, {
-    draw: {
+exports.Splash = Montage.create(Component, {
+    gameState: {
+        value: null
+    },
+
+    handleQuickGameAction: {
         value: function() {
-            
+            this.gameState.currentStage = "lobby";
+        }
+    },
+
+    handleFriendGameAction: {
+        value: function() {
+            this.gameState.currentStage = "lobby";
         }
     }
 });

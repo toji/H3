@@ -280,8 +280,8 @@ exports.Board = Montage.create(Montage, {
             var sideYRatio = Math.cos(0.52358);
             
             // Figure out which direction fits best
-            var tileWidth = width / (this.columns + (sideXRatio * (this.columns+1)));
-            var tileHeight = height / (((this.rows*2)+1) * sideYRatio);
+            var tileWidth = width / (this.columns + (sideXRatio * (this.columns+1))) * 0.5;
+            var tileHeight = height / (((this.rows*2)+1) * sideYRatio) * 0.5;
             
             var tileSide = tileWidth < tileHeight ? tileWidth : tileHeight;
             

@@ -46,7 +46,7 @@ exports.Main = Montage.create(Component, {
     },
 
     _pendingStage: {
-        value: "lobby"
+        value: "splash"
     },
 
     pendingStage: {
@@ -64,7 +64,7 @@ exports.Main = Montage.create(Component, {
     },
 
     currentStage: {
-        value: "lobby"
+        value: "splash"
     },
 
     // Triggers when the scene is done fading out

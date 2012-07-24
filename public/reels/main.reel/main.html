@@ -38,6 +38,13 @@ freely, subject to the following restrictions:
                     }
                 },
 
+                "splash": {
+                    "prototype": "reels/splash.reel",
+                    "bindings": {
+                        "gameState": {"<-": "@owner.gameState"}
+                    }
+                },
+
                 "lobby": {
                     "prototype": "reels/lobby.reel",
                     "bindings": {
@@ -65,11 +72,12 @@ freely, subject to the following restrictions:
                         "element": {"#": "content"},
                         "removalStrategy": "hide",
                         "switchComponents": {
+                            "splash": {"@": "splash"},
                             "lobby": {"@": "lobby"},
                             "gameboard": {"@": "gameboard"},
                             "awards": {"@": "awards"}
                         },
-                        "switchValue": "lobby"
+                        "switchValue": "splash"
                     },
                     "bindings": {
                         "switchValue": {"<-": "@owner.currentStage"}

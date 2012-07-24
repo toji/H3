@@ -97,7 +97,7 @@ exports.GameState = Montage.create(Montage, {
     },
 
     currentStage: {
-        value: "lobby"
+        value: "splash"
     },
 
     chatLog: {
