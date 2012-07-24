@@ -28,5 +28,6 @@ exports.Globals = {
     maxTrailLength: 20,
     trailLife: 250,
     tileSize: 16,
-    theme: 'ninja'
+    theme: 'ninja',
+    baseUrl: "http://h3.jit.su/"
 };

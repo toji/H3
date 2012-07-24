@@ -23,7 +23,8 @@
 
 var Montage = require("montage/core/core").Montage,
     Component = require("montage/ui/component").Component,
-    Converter = require("montage/core/converter/converter").Converter;
+    Converter = require("montage/core/converter/converter").Converter,
+    Globals = require("reels/globals").Globals;
 
 exports.Lobby = Montage.create(Component, {
     gameState: {
@@ -123,7 +124,7 @@ exports.Lobby = Montage.create(Component, {
 exports.GameUrlConverter = Montage.create(Converter, {
     convert: {
         value: function(value) {
-            return "http://h3.jit.su/game/" + value;
+            return Globals.baseUrl + "?game=" + value;
         }
     }
 });
