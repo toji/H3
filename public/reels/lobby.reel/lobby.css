@@ -95,6 +95,24 @@
     color: white;
 }
 
+.lobby .awardsButton {
+    position: absolute;
+    left: 40px;
+    top: 250px;
+    border-radius: 8px;
+    color: white;
+    font-size: 18px;
+    line-height: 34px;
+    background: -webkit-gradient(linear, left top, left bottom, from(#22fa75), to(#047446));
+    height: auto;
+    -webkit-box-shadow: inset 0 37px 0 -10px rgba(255,255,255,.12), 0 0 0 3px rgba(128,128,128,.2);
+    border: 0;
+}
+
+.lobby .awardsButton:hover {
+    color: white;
+}
+
 .lobby .readyButton.ready {
     background-color: #9bd131;
     -webkit-animation-name: none; 
