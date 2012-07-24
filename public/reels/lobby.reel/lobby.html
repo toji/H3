@@ -79,14 +79,14 @@ freely, subject to the following restrictions:
                     "prototype": "montage/ui/controller/array-controller",
                     "properties": {
                         "content": [
-                            "rgb(96,96,96)",
-                            "rgb(127,240,127)",
-                            "rgb(240,240,127)",
-                            "rgb(240,127,127)",
-                            "rgb(240,127,240)",
-                            "rgb(127,127,240)",
-                            "rgb(127,240,240)",
-                            "rgb(255,255,255)"
+                            "rgb(255,255,255)",
+                            "rgb(159,212,46)",
+                            "rgb(255,213,12)",
+                            "rgb(2,188,200)",
+                            "rgb(248,61,129)",
+                            "rgb(194,130,216)",
+                            "rgb(255,127,52)",
+                            "rgb(104,104,104)"
                         ]
                     },
                     "bindings": {
@@ -262,23 +262,22 @@ freely, subject to the following restrictions:
                     <b>Game ID:</b> <span data-montage-id="gameId"></span>
                 </div>
                 <div class="gameUrlField">
-                    <b>Join URL:</b> <a data-montage-id="gameLink" href="http://h3.jit.su/game/">http://h3.jit.su/game/</a>
+                    Invite friends to play this game: <a data-montage-id="gameLink" href="http://h3.jit.su/game/">http://h3.jit.su/game/</a>
                 </div>
             </div>
             <div class="nameField">
-                <span>Name:</span>
+                <span>Name</span>
                 <input data-montage-id="localPlayerName" type="text" class="localPlayerName"></input>
                 <button data-montage-id="readyButton" class="readyButton">Ready?</button>
             </div>
             <div class="colorField">
-                <span>Player Color:</span>
-                <div data-montage-id="localPlayerColorList">
+                <span>Player Color</span>
+                <div data-montage-id="localPlayerColorList" class="colorList">
                     <div data-montage-id="localPlayerColorBack" class="colorOption">
                         <input type="radio" data-montage-id="localPlayerColor" name="localPlayerColor" />
                     </div>
                 </div>
             </div>
-            
             <div>
                 <h3>Players</h3>
                 <div data-montage-id="playerList" class="playerList">
@@ -293,7 +292,7 @@ freely, subject to the following restrictions:
             
             <div class="chatBox">
                 <form data-montage-id="chatForm" class="chatForm">
-                    <span>Chat:</span>
+                    <span>Chat</span>
                     <input type="text" data-montage-id="chatInput" class="chatInput"></input>
                     <button data-montage-id="chatSend" class="chatSend">Send</button>
                 </form>

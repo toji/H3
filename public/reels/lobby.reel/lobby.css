@@ -3,83 +3,211 @@
 }
 
 .lobby {
-    margin: auto;
-    background-color: #DDD;
-    border-radius: 5px;
-    border: 2px solid #AAA;
-    height: 616px;
-    width: 456px;
-    padding: 10px;
-    position: relative;
+    position: absolute;
+    width: 768px;
+    height: 928px;
+    left: 50%;
+    top: 50%;
+    margin-left: -384px;
+    margin-top: -464px;
+    background-image: url(lobby-bg.jpg);
+    background-size: auto 100%;
+    background-position: center center;
+    background-repeat: no-repeat;
 }
 
-.lobby > div {
-    margin-bottom: 10px;
+.lobby #gameDetails {
+    position: absolute;
+    width: 768px;
+    text-align: center;
+    top: 310px;
+    color: #00b2c7;
+    font-size: 24px;
+}
+
+.lobby #gameDetails a {
+    color: #23625f;
+    font-style: italic;
 }
 
 .lobby .gameIdField {
-    float: right;
+    display: none;
 }
 
-.lobby .nameField {
-    font-size: 1.1em;
-    text-align: center;
+.lobby .nameField span {
+    position: absolute;
+    left: 230px;
+    top: 26px;
+    font-size: 24px;
+    color: #00b2c7;
 }
 
 .lobby .localPlayerName {
-    width: 250px;
-    font-size: 1.0em;
-    padding: 3px;
+    -webkit-appearance: none;
+    position: absolute;
+    left: 230px;
+    top: 54px;
+    width: auto;
+    right: 39px;
+    font-size: 24px;
+    line-height: 51px;
+    background: white;
+    height: auto;
+    padding: 0 15px;
+    border: 0;
+    -webkit-box-shadow: 0 0 0 3px rgba(128,128,128,.2);
+    border-radius: 8px;
+    color: #23625f;
 }
 
 @-webkit-keyframes readyPulse {
     from {
-        background-color: #AAA;
+        background-color: #b44166;
     }
     50% {
-        background-color: #F88;
+        background-color: #f83d81;
     }
     to { 
-        background-color: #AAA;
+        background-color: #b44166;
     }
 }
 
 .lobby .readyButton {
+    position: absolute;
+    right: 40px;
+    top: 230px;
+    margin: 0;
+    border-radius: 8px;
+    color: white;
+    font-size: 24px;
+    line-height: 51px;
+    background: white;
+    height: auto;
+    width: 200px;
+    -webkit-box-shadow: inset 0 37px 0 -10px rgba(255,255,255,.12), 0 0 0 3px rgba(128,128,128,.2);
+    border: 0;
     -webkit-animation-name: readyPulse; 
     -webkit-animation-duration: 2.0s;
     -webkit-animation-iteration-count: infinite;
 }
 
+.lobby .readyButton:hover {
+    color: white;
+}
+
 .lobby .readyButton.ready {
-    background-color: #8F8;
+    background-color: #9bd131;
     -webkit-animation-name: none; 
 }
 
-.lobby .colorField {
-    height: 45px;
+.lobby .colorField span {
+    position: absolute;
+    left: 230px;
+    top: 118px;
+    font-size: 24px;
+    color: #00b2c7;
 }
 
-.lobby .colorField span {
-    float: left;
-    padding-top: 15px;
+.lobby .colorList {
+    position: absolute;
+    left: 238px;
+    top: 154px;
 }
 
 .lobby .colorOption {
-    width: 36px;
-    height: 25px;
-    margin: 3px;
+    position: relative;
+    display: block;
+    float: left;
+    width: 45px;
+    height: 45px;
+    margin: 0 18px 0 0;
     cursor: pointer;
-    border-radius: 3px;
-    font-size: 1.2em;
+    border-radius: 2px;
+}
+
+.lobby .colorOption input {
+    -webkit-appearance: none;
+    appearance: none;
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    width: auto;
+    height: auto;
+    margin: 0;
+    background: transparent;
+    border: 3px solid rgba(128,128,128,.2);
+    border-radius: 8px;
+}
+
+.lobby .colorOption.selected input {
+    border: 3px solid #00b2c7;
+}
+
+.lobby h3 {
+    position: absolute;
+    top: 370px;
+    left: 38px;
+    margin: 0;
+    padding: 0;
+    width: 222px;
+    line-height: 53px;
+    background: #00b2c7;
+    color: white;
     text-align: center;
-    padding: 5px 0 5px 0;
-    float: right;
-    border: 1px solid #666;
+    font-weight: normal;
+    font-size: 24px;
+    border-radius: 8px 0 0 0;
+    opacity: .7;
+}
+
+.lobby .chatForm span {
+    position: absolute;
+    display: block;
+    margin: 0;
+    padding: 0;
+    width: 466px;
+    line-height: 53px;
+    background: #00b2c7;
+    color: white;
+    text-align: center;
+    font-weight: normal;
+    font-size: 24px;
+    border-radius: 0 8px 0 0;
+    opacity: .7;
+}
+
+.lobby .chatForm button {
+    position: absolute;
+    left: 363px;
+    top: 466px;
+    margin: 0;
+    border-radius: 0 0 8px 0;
+    color: white;
+    font-size: 24px;
+    line-height: 51px;
+    background: white;
+    height: auto;
+    width: 100px;
+    -webkit-box-shadow: inset 0 37px 0 -10px rgba(255,255,255,.12), 0 0 0 3px rgba(128,128,128,.2);
+    background: #00b2c7;
+    border: 0;
+}
+
+.lobby .playerList {
+    position: absolute;
+    top: 423px;
+    left: 38px;
+    width: 192px;
+    height: 437px;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, .5);
+    border-radius: 0 0 0 8px;
 }
 
 .lobby .player {
-    display: inline-block;
-    width: 48%;
+    display: block;
     margin-bottom: 5px;
     overflow: hidden;
     white-space: nowrap;
@@ -96,9 +224,9 @@
 }
 
 .lobby .chatBox {
-    text-align: center;
     position: absolute;
-    bottom: 0px;
+    top: 370px;
+    left: 264px;
 }
 
 .lobby .chatForm {
@@ -106,20 +234,35 @@
 }
 
 .lobby .chatInput {
+    position: absolute;
+    top: 464px;
+    left: 3px;
     width: 350px;
-    padding: 3px;
+    -webkit-appearance: none;
+    position: absolute;
+    font-size: 24px;
+    line-height: 51px;
+    background: white;
+    height: auto;
+    padding: 0 15px;
+    border: 0;
+    -webkit-box-shadow: 0 0 0 3px rgba(128,128,128,.2);
+    border-radius: 0;
+    color: #23625f;
 }
 
 .lobby .chatLog {
-    width: 445px;
-    height: 250px;
-    background-color: #FFF;
-    border: 1px solid #66A;
+    position: absolute;
+    top: 53px;
+    width: 436px;
+    height: 376px;
+    background-color: rgba(255, 255, 255, .5);
     border-radius: 3px;
     text-align: left;
     font-size: 12px;
     overflow: auto;
-    padding: 5px;
+    padding: 15px;
+    border-radius: 0;
 }
 
 .lobby .chatPlayer {
