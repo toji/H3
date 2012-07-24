@@ -50,27 +50,6 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
         }
     },
 
-    drawTile: {
-        value: function(tile) {
-            var type = this.board.tiles[tile];
-            if(type >= 0)
-                this.drawTileEx(false, tile, type, 1, 1);
-            else
-                this.clearTile(tile);
-        }
-    },
-
-    startFrame: {
-        value: function(frameTime) {
-            for(var i = this.frameStartCallbacks.length - 1; i >= 0; --i) {
-                var keep = this.frameStartCallbacks[i](frameTime);
-                if(!keep) {
-                    this.frameStartCallbacks.splice(i, 1);
-                }
-            }
-        }
-    },
-
     endFrame: {
         value: function(frameTime) {
             for(var i = this.frameEndCallbacks.length - 1; i >= 0; --i) {
@@ -102,8 +81,10 @@ var RenderBase = exports.RenderBase = Montage.create(Montage, {
                 
                 delete tiles[tile];
                 
-                that.drawTileEx(true, tile, type, 1, 1);
-                that.clearTile(tile);
+                // Clear the tile
+                that.drawTile(tile);
+                /*that.drawTileEx(true, tile, type, 1, 1);
+                that.clearTile(tile);*/
             
                 var life = totalLife + parseInt(i, 10) * 5;
                 
@@ -192,6 +173,11 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         value: null
     },
 
+    pendingTileDraws: {
+        value: [],
+        distinct: true
+    },
+
     init: {
         value: function(gameboard) {
             this.gameboard = gameboard;
@@ -206,6 +192,23 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         }
     },
 
+    startFrame: {
+        value: function(frameTime) {
+            var i;
+            for(i = this.frameStartCallbacks.length - 1; i >= 0; --i) {
+                var keep = this.frameStartCallbacks[i](frameTime);
+                if(!keep) {
+                    this.frameStartCallbacks.splice(i, 1);
+                }
+            }
+
+            for(i = 0; i < this.pendingTileDraws.length; ++i) {
+                this._drawTileSync(this.pendingTileDraws[i]);
+            }
+            this.pendingTileDraws = [];
+        }
+    },
+
     clearEffects: {
         value: function() {
             // clear the effects layer
@@ -217,16 +220,33 @@ var CanvasRenderer = exports.CanvasRenderer = Montage.create(RenderBase, {
         }
     },
 
+    drawTile: {
+        value: function(tile) {
+            this.pendingTileDraws.push(tile);
+        }
+    },
+
+    _drawTileSync: {
+        value: function(tile) {
+            var type = this.board.tiles[tile];
+            if(type >= 0)
+                this.drawTileEx(false, tile, type, 1, 1);
+            else
+                this.clearTile(tile);
+        }
+    },
+
     drawTileEx: {
         value: function(effect, tile, type, scale, opacity) {
             var ctx;
+
+            if(type < 0 || type >= this.board.tileTypes.length)
+                return;
+
             if(effect)
                 ctx = this.effectContext;
             else
                 ctx = this.tileContext;
-            
-            if(type < 0 || type >= this.board.tileTypes.length)
-                return;
                 
             ctx.save();
             

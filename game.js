@@ -8,7 +8,7 @@ var Game = function(private_gameid) {
     this.id = Game.new_id();
     this.private_gameid = private_gameid;
     this.player_limit = 4;
-    this.time_limit = 10;
+    this.time_limit = 60;
     this.tile_recharge = 2.0;
     this.readyTimeout = null;
     this.round_timeout = null;
@@ -29,7 +29,7 @@ Game.prototype.data_object = function() {
         tile_recharge: that.tile_recharge,
         tiles: that.tiles,
         board: that.board.data_object(),
-        players: [],
+        players: []
     };
     for(var i in this.players) {
         data.players.push(this.players[i].data_object());
