@@ -420,6 +420,7 @@ exports.GameState = Montage.create(Montage, {
             this.playerList.push(player);
             if(player.id == this.localPlayerId) {
                 this.localPlayer = player;
+                player.localPlayer = true;
             }
         }
     },

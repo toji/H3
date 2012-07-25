@@ -280,19 +280,19 @@ exports.Board = Montage.create(Montage, {
             var sideYRatio = Math.cos(0.52358);
             
             // Figure out which direction fits best
-            var tileWidth = width / (this.columns + (sideXRatio * (this.columns+1)));
-            var tileHeight = height / (((this.rows*2)+1) * sideYRatio);
+            var tileWidth = Math.floor(width / (this.columns + (sideXRatio * (this.columns+1))));
+            var tileHeight = Math.floor(height / (((this.rows*2)+1) * sideYRatio));
             
             var tileSide = tileWidth < tileHeight ? tileWidth : tileHeight;
             
             this.tileSize = {};
             
-            this.tileSize.padding = tileSide * this.tilePadding;
-            this.tileSize.s = tileSide; // Length of one side of a hexagon (in pixels)
-            this.tileSize.h = sideXRatio * this.tileSize.s;
-            this.tileSize.r = sideYRatio * this.tileSize.s;
-            this.tileSize.b = this.tileSize.h * 2 + this.tileSize.s;
-            this.tileSize.a = this.tileSize.r * 2;
+            this.tileSize.padding = Math.floor(tileSide * this.tilePadding);
+            this.tileSize.s = Math.floor(tileSide); // Length of one side of a hexagon (in pixels)
+            this.tileSize.h = Math.floor(sideXRatio * this.tileSize.s);
+            this.tileSize.r = Math.floor(sideYRatio * this.tileSize.s);
+            this.tileSize.b = Math.floor(this.tileSize.h * 2 + this.tileSize.s);
+            this.tileSize.a = Math.floor(this.tileSize.r * 2);
             
             var ts = this.tileSize;
             
@@ -306,8 +306,8 @@ exports.Board = Montage.create(Montage, {
                 {x: 0, y: ts.r}
             ];
             
-            var boardWidth = (this.columns * (this.tileSize.h + this.tileSize.s)) + this.tileSize.h;
-            var boardHeight = (this.rows * this.tileSize.a) + this.tileSize.r;
+            var boardWidth = Math.floor((this.columns * (this.tileSize.h + this.tileSize.s)) + this.tileSize.h);
+            var boardHeight = Math.floor((this.rows * this.tileSize.a) + this.tileSize.r);
             
             this.offset = {
                 x: ((width - boardWidth) / 2) + left,

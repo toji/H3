@@ -43,6 +43,10 @@ exports.Player = Montage.create(Montage, {
         value: null
     },
 
+    localPlayer: {
+        value: false
+    },
+
     _color: {
         value: {r: 255, g: 255, b: 255 }
     },
@@ -93,14 +97,14 @@ exports.Player = Montage.create(Montage, {
         value: function(id, game) {
             this.id = id;
             this.game = game;
-            this.name = 'Player ' + this.id;
+            this.name = null;
             return this;
         }
     },
 
     sync: {
         value: function(data) {
-            if(data.name) {
+            if(data.name && (!this.localPlayer || !this.name)) {
                 this.name = data.name;
             }
                 
