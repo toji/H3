@@ -1,5 +1,5 @@
-.gameboard
-{
+
+.gameboard {
     position: relative;
     margin: auto;
     width: 100%;
@@ -28,18 +28,56 @@
     z-index: 2;
 }
 
-.gameboard .timer {
+.gameboard .display {
     position: relative;
-    z-index: 3;
+    z-index: 4;
     text-align: center;
-    pointer-events: none;
+    color: white;
+    font-size: 20px;
 }
 
 .gameboard .scoreboard {
-    position: relative;
-    z-index: 4;
+    display: inline-block;
     pointer-events: none;
+    padding: 6px 6px 6px 15px;
+    border-radius: 0 0 0 10px;
+    background: #00B2C7;
 }
+
+.gameboard .scoreboard .playerScore {
+    display: inline-block;
+    min-width: 80px;
+    margin-left: 5px;
+    text-align: right;
+    padding: 0 4px;
+    background: hsla(0,0%,0%,.1);
+}
+
+.gameboard .timer {
+    position: relative;
+    display: inline-block;
+    pointer-events: none;
+    padding: 6px 15px;
+    border-radius: 0 0 10px 0;
+    background: #00B2C7;
+}
+
+.gameboard .timeLeft {
+    display: inline-block;
+    width: 150px;
+    margin-left: 5px;
+    height: 15px;
+    border-radius: 0;
+    border: 2px solid #00B2C7;
+    background: #00B2C7;
+    box-shadow: 0 0 0 2px hsla(0,0%,0%,.1);
+}
+
+.gameboard .timeLeft > .montage-progress-bar {
+    background: hsla(0,0%,100%,.5);
+    border-radius: 0;
+}
+
 
 .gameboard .toast {
     position: absolute;

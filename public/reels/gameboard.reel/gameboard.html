@@ -35,7 +35,7 @@ freely, subject to the following restrictions:
                 },
 
                 "timeLeft": {
-                    "prototype": "montage/ui/dynamic-text.reel",
+                    "prototype": "montage/ui/progress.reel",
                     "properties": {
                         "element": {"#": "timeLeft"}
                     },
@@ -68,13 +68,15 @@ freely, subject to the following restrictions:
     </head>
     <body>
         <section data-montage-id="gameboard" class="gameboard">
-            <div class="timer">
-                <img src="img/clock.png">
-                <span data-montage-id="timeLeft" class="timeLeft"></span>
-            </div>
-            <div class="scoreboard">
-                <span data-montage-id="playerName" class="playerName"></span>
-                <span data-montage-id="playerScore" class="playerScore"></span>
+            <div class="display">
+                <div class="scoreboard">
+                    <span data-montage-id="playerName" class="playerName"></span>'s score
+                    <span data-montage-id="playerScore" class="playerScore"></span>
+                </div>
+                <div class="timer">
+                    Time
+                    <span data-montage-id="timeLeft" class="timeLeft"></span>
+                </div>
             </div>
         </section>
     </body>
