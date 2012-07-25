@@ -49,12 +49,8 @@ exports.Gameboard = Montage.create(Component, {
 
     templateDidLoad: {
         value: function() {
-            
-
             this.gameState.addEventListener("startRound", this, false);
             this.gameState.addEventListener("endRound", this, false);
-
-            
         }
     },
 

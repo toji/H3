@@ -40,7 +40,8 @@ freely, subject to the following restrictions:
                         "element": {"#": "timeLeft"}
                     },
                     "bindings": {
-                        "value": {"<-": "@owner.gameState.timeLeft"}
+                        "value": {"<-": "@owner.gameState.timeLeft"},
+                        "max": {"<-": "@owner.gameState.timeLimit"}
                     }
                 },
 
