@@ -1,26 +1,23 @@
 {
-    "name": "h3",
-    "subdomain": "h3",
-    "author": {
-        "name": "Brandon Jones",
-        "email": "tojiro@gmail.com"
-    },
-    "scripts": {
-        "start": "server.js"
-    },
-    "version": "0.0.1-17",
-    "dependencies": {
-        "socket.io": "v0.8.x",
-        "express": "v2.5.x"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/toji/H3.git"
-    },
-    "analyze": false,
-    "devDependencies": {},
-    "optionalDependencies": {},
-    "engines": {
-        "node": "0.6.x"
-    }
+  "name": "ninjabee",
+  "subdomain": "ninjabee",
+  "version": "0.1.0-2",
+  "author": {
+    "name": "Brandon Jones",
+    "email": "tojiro@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/toji/H3.git"
+  },
+  "scripts": {
+    "start": "server.js"
+  },
+  "engines": {
+    "node": "0.6.x"
+  },
+  "dependencies": {
+    "socket.io": "v0.8.x",
+    "express": "v2.5.x"
+  }
 }

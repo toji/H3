@@ -29,5 +29,5 @@ exports.Globals = {
     trailLife: 250,
     tileSize: 16,
     theme: 'ninja',
-    baseUrl: "http://h3.jit.su/"
+    baseUrl: "http://ninjabee.jit.su/"
 };

@@ -1,3 +1,3 @@
-[submodule "public/node_modules/montage"]
-	path = public/node_modules/montage
+[submodule "public/vendor/montage"]
+	path = public/vendor/montage
 	url = git://github.com/Motorola-Mobility/montage.git

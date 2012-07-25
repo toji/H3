@@ -10,12 +10,15 @@ var HTTP_PORT = 8080;
 // HTTP Server
 var server = express.createServer();
 
+var publicPath = "/public";
+//var publicPath = "/builds/ninjabee@fcf6352";
+
 server.configure(function() {
     /*server.use(express.cookieParser());
     server.use(express.session({ secret: 'baka neko' }));*/
-    server.use(express.favicon(__dirname + '/public/favicon.ico'));
-    server.use(express.static(__dirname + '/public'));
-    server.use(express.directory(__dirname + '/public'));
+    server.use(express.favicon(__dirname + publicPath +'/favicon.ico'));
+    server.use(express.static(__dirname + publicPath));
+    server.use(express.directory(__dirname + publicPath));
 });
 
 // Socket.io

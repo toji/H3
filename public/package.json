@@ -1,7 +1,7 @@
 {
-    "name": "h3",
-    "version": "0.0.1",
+    "name": "ninjabee",
+    "version": "0.1.0",
     "mappings": {
-        "montage": "./node_modules/montage"
+        "montage": "./vendor/montage"
     }
 }
