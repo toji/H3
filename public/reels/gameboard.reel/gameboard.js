@@ -47,6 +47,14 @@ exports.Gameboard = Montage.create(Component, {
         value: false
     },
 
+    message: {
+        value: null
+    },
+
+    messageText: {
+        value: null
+    },
+
     templateDidLoad: {
         value: function() {
             this.gameState.addEventListener("startRound", this, false);
@@ -63,7 +71,30 @@ exports.Gameboard = Montage.create(Component, {
 
     handleEndRound: {
         value: function() {
-            this.gameState.currentStage = "awards";
+            var self = this;
+            this.pushMessage("Stop!", 2000, function() {
+                self.gameState.currentStage = "awards";
+            });
+        }
+    },
+
+    _showingMessage: {
+        value: false
+    },
+
+    pushMessage: {
+        value: function(text, timeout, callback) {
+            var self = this;
+            this.messageText = text;
+            this._showingMessage = true;
+            this.needsDraw = true;
+            setTimeout(function() {
+                self._showingMessage = false;
+                self.needsDraw = true;
+                if(callback) {
+                    callback();
+                }
+            }, timeout);
         }
     },
 
@@ -182,6 +213,12 @@ exports.Gameboard = Montage.create(Component, {
 
     draw: {
         value: function() {
+            if(this._showingMessage) {
+                this.message.classList.add("show");
+            } else {
+                this.message.classList.remove("show");
+            }
+
             if(!this.gameState.roundStarted) { return; }
 
             var newFrameTime = Date.now();

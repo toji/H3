@@ -30,7 +30,8 @@ freely, subject to the following restrictions:
                 "owner": {
                     "prototype": "reels/gameboard.reel",
                     "properties": {
-                        "element": {"#": "gameboard" }
+                        "element": {"#": "gameboard" },
+                        "message": {"#": "message"}
                     }
                 },
 
@@ -63,6 +64,16 @@ freely, subject to the following restrictions:
                     "bindings": {
                         "value": {"<-": "@owner.gameState.localPlayer.score"}
                     }
+                },
+
+                "messageText": {
+                    "prototype": "montage/ui/dynamic-text.reel",
+                    "properties": {
+                        "element": {"#": "messageText"}
+                    },
+                    "bindings": {
+                        "value": {"<-": "@owner.messageText"}
+                    }
                 }
             }
         </script>
@@ -79,8 +90,8 @@ freely, subject to the following restrictions:
                     <span data-montage-id="timeLeft" class="timeLeft"></span>
                 </div>
             </div>
-            <div class="message">
-                <div class="messageText"></div>
+            <div data-montage-id="message" class="message">
+                <div data-montage-id="messageText" class="messageText"></div>
             </div>
         </section>
     </body>
