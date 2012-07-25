@@ -30,7 +30,7 @@ body {
     position: absolute;
     width: 100%;
     text-align: center;
-    /display: none;
+    display: none;
 }
 
 #montage-app-bootstrapper {
