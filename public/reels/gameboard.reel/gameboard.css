@@ -94,3 +94,43 @@
     opacity: 0;
     -webkit-transition: margin-top 1s, opacity 0.25s 0.75s;
 }
+
+.gameboard .message {
+    position: absolute;
+    pointer-events: none;
+    z-index: 5;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: -webkit-box;
+    -webkit-box-align: center;
+    -webkit-box-pack: center;
+    visibility: hidden;
+    -webkit-transition: visibility 0s .2s; /* Delay till transition is done */
+}
+
+.gameboard .message.show {
+    visibility: visible;
+    -webkit-transition: none;
+}
+
+.gameboard .messageText {
+    font-size: 50px;
+    padding: 50px;
+    margin: 50px;
+    color: white;
+    text-align: center;
+    border-radius: 20px;
+    background: #00B2C7;
+    border: 6px solid white;
+    -webkit-transform: scale(0);
+    -webkit-transition: -webkit-transform .2s cubic-bezier(0.420, 0, 0.925, 0.505); /* Fallback */
+    -webkit-transition: -webkit-transform .2s cubic-bezier(0.420, -0.175, 0.925, 0.505);
+}
+
+.gameboard .message.show .messageText {
+    -webkit-transform: scale(1);
+    -webkit-transition: -webkit-transform .2s cubic-bezier(0.000, 0.580, 0.490, 1); /* Fallback */
+    -webkit-transition: -webkit-transform .2s cubic-bezier(0.000, 0.580, 0.490, 1.225);
+}
