@@ -47,7 +47,7 @@ freely, subject to the following restrictions:
                         "removalStrategy": "hide"
                     },
                     "bindings": {
-                        "condition": {"<-": "@owner.gameState.privateGame"}
+                        "condition": {"<-": "@owner.gameState.privateGameId"}
                     }
                 },
 
@@ -57,7 +57,7 @@ freely, subject to the following restrictions:
                         "element": {"#": "gameId"}
                     },
                     "bindings": {
-                        "value": {"<-": "@owner.gameState.id"}
+                        "value": {"<-": "@owner.gameState.privateGameId"}
                     }
                 },
 
@@ -71,8 +71,8 @@ freely, subject to the following restrictions:
                         "element": {"#": "gameLink"}
                     },
                     "bindings": {
-                        "href": {"<-": "@owner.gameState.id", "converter": {"@": "urlConverter"}},
-                        "textContent": {"<-": "@owner.gameState.id", "converter": {"@": "urlConverter"}}
+                        "href": {"<-": "@owner.gameState.privateGameId", "converter": {"@": "urlConverter"}},
+                        "textContent": {"<-": "@owner.gameState.privateGameId", "converter": {"@": "urlConverter"}}
                     }
                 },
 
@@ -268,14 +268,6 @@ freely, subject to the following restrictions:
     </head>
     <body>
         <section data-montage-id="lobby" class="lobby">
-            <div id="gameDetails">
-                <div class="gameIdField">
-                    <b>Game ID:</b> <span data-montage-id="gameId"></span>
-                </div>
-                <div data-montage-id="privateCondition" class="gameUrlField">
-                    Invite friends to play this game: <a data-montage-id="gameLink"></a>
-                </div>
-            </div>
             <div class="nameField">
                 <span>Name</span>
                 <input data-montage-id="localPlayerName" type="text" class="localPlayerName"></input>
@@ -287,6 +279,11 @@ freely, subject to the following restrictions:
                     <div data-montage-id="localPlayerColorBack" class="colorOption">
                         <input type="radio" data-montage-id="localPlayerColor" name="localPlayerColor" />
                     </div>
+                </div>
+            </div>
+            <div id="gameDetails">
+                <div data-montage-id="privateCondition" class="gameUrlField">
+                    Invite friends to play this game: <a data-montage-id="gameLink"></a>
                 </div>
             </div>
             <div>

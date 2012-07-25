@@ -4,9 +4,9 @@ var board = require('./board');
 // Game
 //
 
-var Game = function(private_game) {
+var Game = function(private_gameid) {
     this.id = Game.new_id();
-    this.private_game = !!private_game;
+    this.private_gameid = private_gameid < 0 ? this.id : private_gameid;
     this.player_limit = 4;
     this.time_limit = 60;
     this.tile_recharge = 2.0;
@@ -29,7 +29,7 @@ Game.prototype.data_object = function() {
         tiles: this.tiles,
         board: this.board.data_object(),
         players: [],
-        private_game: this.private_game
+        private_gameid: this.private_gameid
     };
     for(var i in this.players) {
         data.players.push(this.players[i].data_object());
@@ -430,7 +430,7 @@ Game.find_game = function(gameid) {
     }
     else if(gameid == -2) {
         // New Private game
-        game = new Game(true);
+        game = new Game(gameid);
         Game.private_games[game.id] = game;
         return game;
     }

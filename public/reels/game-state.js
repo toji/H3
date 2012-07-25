@@ -408,8 +408,8 @@ exports.GameState = Montage.create(Montage, {
                 this.timeLimit = data.time_limit;
             }
 
-            if(data.hasOwnProperty("private_game")) {
-                this.privateGame = data.private_game;
+            if(data.hasOwnProperty("private_gameid")) {
+                this.privateGameId = data.private_gameid;
             }
         }
     },
