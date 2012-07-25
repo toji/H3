@@ -1,11 +1,12 @@
 .gameboard
 {
+    position: relative;
     margin: auto;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 768px;
+    max-height: 928px;
+    background-color: #f9fad4;
 }
 
 .gameboard > canvas {
@@ -17,7 +18,6 @@
 }
 
 .gameboard .tileLayer {
-    background-color: #f9fad4;
     border-radius: 5px;
     cursor: pointer !important;
     z-index: 1;
