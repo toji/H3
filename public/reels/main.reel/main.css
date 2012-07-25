@@ -1,7 +1,3 @@
-body {
-    /* This may possibly cause more slowdown than it's worth. Need to investigate that */
-    background-image: -webkit-linear-gradient(top, rgb(250, 251, 217), rgb(213, 252, 39)); 
-}
 
 .content {
     opacity: 1;

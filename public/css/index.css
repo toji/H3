@@ -11,7 +11,8 @@ html, body {
 body {
     color: #333;
     font-family: "Trebuchet MS";
-    background-color: black;
+    /* This may possibly cause more slowdown than it's worth. Need to investigate that */
+    background-image: -webkit-linear-gradient(top, rgb(250, 251, 217), rgb(213, 252, 39));
 }
 
 #center-column {
@@ -19,6 +20,40 @@ body {
     width: 460px;
     color: #111;
 }
+
+
+
+/* Loader ------------------------- */
+
+#montage-app-bootstrapper,
+#montage-app-loader {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    /display: none;
+}
+
+#montage-app-bootstrapper {
+    top: 200px;
+}
+
+#montage-app-loader {
+    top: 280px;
+}
+
+.montage-app-bootstrapping #montage-app-bootstrapper,
+.montage-app-loading #montage-app-bootstrapper,
+.montage-app-loading #montage-app-loader {
+    display: block;
+}
+
+.main {
+    visibility: hidden;
+}
+.montage-app-loaded .main {
+    visibility: visible;
+}
+
 
 
 
