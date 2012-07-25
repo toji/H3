@@ -57,13 +57,29 @@ exports.Gameboard = Montage.create(Component, {
 
     templateDidLoad: {
         value: function() {
+            this.gameState.addEventListener("startCountdown", this, false);
             this.gameState.addEventListener("startRound", this, false);
             this.gameState.addEventListener("endRound", this, false);
         }
     },
 
+    handleStartCountdown: {
+        value: function() {
+            var self = this;
+            this.gameState.redrawAll();
+            this.needsDraw = true;
+            this.pushMessage("3", 1000, function() {
+                self.pushMessage("2", 1000, function() {
+                    self.pushMessage("1", 1000);
+                });
+            });
+        }
+    },
+
     handleStartRound: {
         value: function() {
+            var self = this;
+            this.pushMessage("Go!", 500);
             this._lastFrameTime = this.timeStarted;
             this.needsDraw = true;
         }
@@ -204,6 +220,8 @@ exports.Gameboard = Montage.create(Component, {
             this.effectLayer.addEventListener("touchstart", this, false);
             this.effectLayer.addEventListener("touchmove", this, false);
             document.addEventListener("touchend", this, false);
+
+            this.handleStartCountdown();
         }
     },
 
@@ -219,11 +237,11 @@ exports.Gameboard = Montage.create(Component, {
                 this.message.classList.remove("show");
             }
 
-            if(!this.gameState.roundStarted) { return; }
-
             var newFrameTime = Date.now();
             this.gameState.onFrame(newFrameTime, newFrameTime - this._lastFrameTime);
             this._lastFrameTime = newFrameTime;
+
+            if(!this.gameState.roundStarted) { return; }
 
             this.needsDraw = true; // Schedule the next draw
         }

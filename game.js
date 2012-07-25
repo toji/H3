@@ -127,8 +127,7 @@ Game.prototype.reset = function() {
 Game.prototype.ready_changed = function() {
     clearTimeout(this.ready_timeout);
     
-    for(var i in this.players)
-    {
+    for(var i in this.players) {
         var player = this.players[i];
         
         if(!player.ready)
@@ -145,8 +144,7 @@ Game.prototype.ready_changed = function() {
         that.ready_timeout = null;
         
         // Everyone still ready?
-        for(var i in this.players)
-        {
+        for(var i in this.players) {
             var player = this.players[i];
             if(!player.ready)
                 return;
@@ -161,39 +159,42 @@ Game.prototype.start_round = function() {
     if(!this.private_game)
         Game.close_game(this);
 
+    var that = this;
+
     clearTimeout(this.round_timeout);
     
     this.reset();
     
-    // TODO: Countdown?
-    
-    this.round_started = true;
-    
-    this.broadcast('start_round', this.data_object());
-    
-    var that = this;
-    
-    // Uncomment for debugging. Periodically re-syncs the entire board
-    // Useful for ferreting out synchonization problems
-    /*var resync_interval = setInterval(function() {
-        that.broadcast('sync_game', that.data_object());
-    }, 5000);*/
-    
-    this.round_timeout = setTimeout(function(){
-        that.round_timeout = null;
-        that.round_started = false;
+    // TODO: Need a way to sync everyone's time up?
+    this.broadcast('start_countdown', this.data_object());
+
+    setTimeout(function(){
+        that.round_started = true;
+        that.broadcast('start_round');
+
+        // Uncomment for debugging. Periodically re-syncs the entire board
+        // Useful for ferreting out synchonization problems
+        /*var resync_interval = setInterval(function() {
+            that.broadcast('sync_game', that.data_object());
+        }, 5000);*/
         
-        //clearInterval(resync_interval);
-        
-        var stats = that.get_round_stats();
-        that.broadcast('end_round', stats);
-        
-        var winner = that.get_winner();
-        that.broadcast('chat', 'The round has ended!');
-        that.broadcast('chat', winner.name + ' was the winner with ' + winner.score + ' points!');
-        // TODO: Tally scores, give awards
-        
-    }, this.time_limit * 1000);
+        that.round_timeout = setTimeout(function(){
+            that.round_timeout = null;
+            that.round_started = false;
+            
+            //clearInterval(resync_interval);
+            
+            var stats = that.get_round_stats();
+            that.broadcast('end_round', stats);
+            
+            var winner = that.get_winner();
+            that.broadcast('chat', 'The round has ended!');
+            that.broadcast('chat', winner.name + ' was the winner with ' + winner.score + ' points!');
+            // TODO: Tally scores, give awards
+            
+        }, that.time_limit * 1000);
+
+    }, 3000);
 };
 
 Game.prototype.get_winner = function() {

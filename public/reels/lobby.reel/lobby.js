@@ -43,12 +43,11 @@ exports.Lobby = Montage.create(Component, {
     templateDidLoad: {
         value: function() {
             this.chatForm.addEventListener("submit", this, false);
-            this.gameState.addEventListener("startRound", this, false);
-            this.gameState.addEventListener("endRound", this, false);
+            this.gameState.addEventListener("startCountdown", this, false);
         }
     },
 
-    handleStartRound: {
+    handleStartCountdown: {
         value: function() {
             this.gameState.currentStage = "gameboard";
         }

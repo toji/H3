@@ -211,9 +211,13 @@ exports.GameState = Montage.create(Montage, {
                 case 'sync_game':
                     this.sync(data);
                     break;
+
+                case 'start_countdown':
+                    this.sync(data);
+                    this.startCountdown();
+                    break;
                     
                 case 'start_round':
-                    this.sync(data);
                     this.startRound();
                     break;
                 
@@ -272,6 +276,14 @@ exports.GameState = Montage.create(Montage, {
                 player = this.serverPlayer;
             }
             this.chatLog.push({player: player, message: message});
+        }
+    },
+
+    startCountdown: {
+        value: function() {
+            var startCountdownEvent = document.createEvent("CustomEvent");
+            startCountdownEvent.initCustomEvent("startCountdown", true, true, null);
+            this.dispatchEvent(startCountdownEvent);
         }
     },
 
